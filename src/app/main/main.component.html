@@ -1,6 +1,13 @@
-<p>main works!</p>
-
-<div *ngFor="let mon of pokemon | async">
-  <p>Name: {{mon.name}}</p>
-  <p *ngFor="let type of mon.types">{{type}}</p>
+<div class="main-container">
+  <!-- todo: score component -->
+  <div class="score">
+    <p>High Score: 10</p>
+  </div>
+  <div class="gameboard">
+    <div class="pokemon-container" *ngFor="let mon of pokemon | async">
+      <div class="pokemon-container__wrapper">
+        <div class="pokemon-name">{{mon.name}}</div>
+      </div>
+    </div>
+  </div>
 </div>
