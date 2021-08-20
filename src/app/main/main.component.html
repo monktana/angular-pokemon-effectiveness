@@ -1,1 +1,6 @@
 <p>main works!</p>
+
+<div *ngFor="let mon of pokemon | async">
+  <p>Name: {{mon.name}}</p>
+  <p *ngFor="let type of mon.types">{{type}}</p>
+</div>
