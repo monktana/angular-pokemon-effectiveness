@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
-import { Types } from 'src/app/main/types';
+import { Pokemon } from "./../pokemon/pokemon";
+import { PokemonService } from "./../pokemon/pokemon.service";
 
 @Component({
   selector: 'app-main',
@@ -8,25 +8,11 @@ import { Types } from 'src/app/main/types';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  pokemon: any;
+  pokemon: Pokemon[];
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.pokemon = of([
-      {
-        name: 'Nidorino',
-        types: [
-          Types.Poison
-        ]
-      },
-      {
-        name: 'Gengar',
-        types: [
-          Types.Ghost,
-          Types.Poison
-        ]
-      }
-    ])
+  constructor(pokemonService: PokemonService) {
+    this.pokemon = pokemonService.getPokemon();
   }
+
+  ngOnInit(): void {}
 }
