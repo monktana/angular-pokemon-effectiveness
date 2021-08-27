@@ -1,7 +1,8 @@
-import { Types } from "./types";
+import { Type } from "./type";
 
 export interface Pokemon {
   id: number;
   name: string;
-  types: Types[];
+  picture: string;
+  type: Type[];
 }
