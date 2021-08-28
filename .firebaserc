@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pokemoneffectiveness": {
+      "hosting": {
+        "angular-pokemon-effectiveness": [
+          "pokemoneffectiveness"
+        ]
+      }
+    }
+  }
+}
