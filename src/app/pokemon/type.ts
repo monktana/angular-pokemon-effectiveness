@@ -3,6 +3,10 @@ export interface Type {
   name: string;
   icon: string;
   color: string;
-  effectiv: Type[];
-  ineffectiv: Type[];
+  effectiveness: TypeMatchup[];
+}
+
+export interface TypeMatchup {
+  type: Type;
+  multiplier: number;
 }
