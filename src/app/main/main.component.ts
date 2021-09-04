@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon } from "./../pokemon/pokemon";
 import { PokemonService } from "./../pokemon/pokemon.service";
-import { Observable } from 'rxjs';
+import { Observable, scheduled } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -9,11 +8,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  pokemon: Observable<any[]>;
+  pokemon: Observable<any>;
 
   constructor(pokemonService: PokemonService) {
     this.pokemon = pokemonService.getPokemon();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

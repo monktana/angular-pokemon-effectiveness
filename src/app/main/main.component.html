@@ -4,9 +4,12 @@
     <p>High Score: 10</p>
   </div>
   <div class="gameboard">
-    <div class="pokemon-container" *ngFor="let mon of pokemon">
+    <div class="pokemon-container" *ngFor="let mon of pokemon | async">
       <div class="pokemon-container__wrapper">
-        <div class="pokemon-name">{{mon.name}}</div>
+        <div class="pokemon-name">
+          <p>{{mon.name}}</p>
+          <p>{{mon.types}}</p>
+        </div>
       </div>
     </div>
   </div>
