@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PokemonService } from "./../pokemon/pokemon.service";
-import { Observable, scheduled } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { Pokemon } from '../pokemon/pokemon';
 
 @Component({
   selector: 'app-main',
@@ -8,11 +9,16 @@ import { Observable, scheduled } from 'rxjs';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  pokemon: Observable<any>;
+  pokemon: Pokemon[] | undefined;
+  subscription: Subscription | undefined;
 
-  constructor(pokemonService: PokemonService) {
-    this.pokemon = pokemonService.getPokemon();
+  constructor(private pokemonService: PokemonService) { }
+
+  ngOnInit() { 
+    this.subscription = this.pokemonService.getAllPokemon().subscribe(pokemon => (this.pokemon = pokemon))
   }
 
-  ngOnInit(): void { }
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
 }
