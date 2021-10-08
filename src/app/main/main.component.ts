@@ -9,13 +9,13 @@ import { Pokemon } from '../pokemon/pokemon';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  pokemon: Observable<Pokemon[]> | undefined;
+  pokemon: Observable<Pokemon[]>;
 
-  constructor(private pokemonService: PokemonService) { }
-
-  ngOnInit() { 
-    this.pokemon = this.pokemonService.getAllPokemon()
+  constructor(private pokemonService: PokemonService) { 
+    this.pokemon = this.pokemonService.getRandomPokemon(2);
   }
+
+  ngOnInit() { }
 
   ngOnDestroy() { }
 }
