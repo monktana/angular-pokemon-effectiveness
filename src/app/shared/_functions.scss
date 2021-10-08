@@ -12,27 +12,18 @@ $linear-channel-values: .0008 .001 .0011 .0013 .0015 .0017 .002 .0022 .0025 .002
   $backLum: luminance($back) + .05;
   $foreLum: luminance($front) + .05;
 
-  @debug "backLum color: #{$backLum}";
-  @debug "foreLum color: #{$foreLum}";
-
   @return max($backLum, $foreLum) / min($backLum, $foreLum);
 }
 
 @function choose-contrast-color($color) {
-  @debug "background color: #{$color}";
 
   $lightContrast: contrast($color, $color-contrast-light);
   $darkContrast: contrast($color, $color-contrast-dark);
 
-  @debug "lightContrast color: #{$lightContrast}";
-  @debug "darkContrast color: #{$darkContrast}";
-
   @if ($lightContrast > $darkContrast) {
-    @debug "returns light contrast";
     @return $color-contrast-light;
   }
   @else {
-    @debug "returns dark contrast";
     @return $color-contrast-dark;
   }
 }
