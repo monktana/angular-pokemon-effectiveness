@@ -1,10 +1,10 @@
 <div class="pokemon-container">
   <div class="pokemon-container__wrapper">
     <div class="pokemon-name">
-      <p>{{pokemon?.name}}</p>
+      <p>{{pokemon.name}}</p>
     </div>
     <div class="pokemon-types__wrapper">
-      <div class="pokemon-types__chip pokemon-types__chip-dark" [class]="type.name" *ngFor="let type of pokemon?.types">
+      <div class="pokemon-types__chip pokemon-types__chip-{{type.name}}" *ngFor="let type of pokemon.types">
         {{type.name}}
       </div>
     </div>
