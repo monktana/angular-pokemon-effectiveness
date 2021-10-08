@@ -4,6 +4,9 @@
     <p>High Score: 10</p>
   </div>
   <div class="gameboard">
-    <app-pokemon [pokemon]="mon" *ngFor="let mon of pokemon | async"></app-pokemon>
+    <app-pokemon [pokemon]="pokemon" *ngFor="let pokemon of pokemon$ | async"></app-pokemon>
+    <div class="decisions">
+      <button class="button decisions_button" (click)="fight()">Very effective</button>
+    </div>
   </div>
 </div>

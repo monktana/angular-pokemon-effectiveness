@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pokemon } from '../pokemon/pokemon';
+import { Pokemon, Type } from '../pokemon/pokemon';
 import { PokemonService } from "../pokemon/pokemon.service";
+import { typeMatchups } from "../pokemon/typematrix";
 
 @Component({
   selector: 'app-main',
@@ -22,11 +23,21 @@ export class MainComponent implements OnInit {
 
   private refreshPokemon(): void {
     this.pokemon$ = this.pokemonService.getRandomPokemon(2);
-    var subscription = this.pokemon$.subscribe((value: Pokemon[]) => this.pokemon = value);
-    subscription.unsubscribe();
+    this.pokemon$.subscribe((value: Pokemon[]) => this.pokemon = value);
   }
 
-  private fight(): number {
-    return 0;
+  public fight(): number {
+    const defending: Pokemon = this.pokemon[0];
+    const attacking: Pokemon = this.pokemon[1];
+
+    let multiplier = 1;
+
+    attacking.types.forEach((attackingType: Type) => {
+      defending.types.forEach((defendingType: Type) => {
+        multiplier *= typeMatchups[attackingType.name][defendingType.name]
+      })
+    });
+
+    return multiplier;
   }
 }

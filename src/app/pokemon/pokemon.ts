@@ -7,8 +7,3 @@ export interface Pokemon {
 export interface Type {
   name: string;
 }
-
-export interface TypeMatchup {
-  type: Type;
-  multiplier: number;
-}
