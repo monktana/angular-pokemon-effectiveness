@@ -6,11 +6,8 @@ export interface Pokemon {
 }
 
 export interface Type {
-  id: number;
   name: string;
-  icon: string;
   color: string;
-  effectiveness: TypeMatchup[] | null;
 }
 
 export interface TypeMatchup {
