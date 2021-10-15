@@ -6,7 +6,9 @@
   <div class="gameboard">
     <app-pokemon [pokemon]="pokemon" *ngFor="let pokemon of pokemon$ | async"></app-pokemon>
     <div class="decisions">
-      <button class="button decisions_button" (click)="fight()">Very effective</button>
+      <button class="button decisions_button" (click)="fight(TypeEffectiveness.VeryEffective)">Very effective</button>
+      <button class="button decisions_button" (click)="fight(TypeEffectiveness.Effective)">Effective</button>
+      <button class="button decisions_button" (click)="fight(TypeEffectiveness.NotEffective)">Not effective</button>
     </div>
   </div>
 </div>

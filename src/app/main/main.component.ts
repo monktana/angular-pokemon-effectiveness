@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pokemon, Type } from '../pokemon/pokemon';
+import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
 import { PokemonService } from "../pokemon/pokemon.service";
-import { typeMatchups } from "../pokemon/typematrix";
 
 @Component({
   selector: 'app-main',
@@ -26,18 +25,12 @@ export class MainComponent implements OnInit {
     this.pokemon$.subscribe((value: Pokemon[]) => this.pokemon = value);
   }
 
-  public fight(): number {
-    const defending: Pokemon = this.pokemon[0];
-    const attacking: Pokemon = this.pokemon[1];
+  public fight(guess: TypeEffectiveness): boolean {
+    const effectiveness = attack(this.pokemon[0], this.pokemon[1]);
+    return guess == effectiveness;
+  }
 
-    let multiplier = 1;
-
-    attacking.types.forEach((attackingType: Type) => {
-      defending.types.forEach((defendingType: Type) => {
-        multiplier *= typeMatchups[attackingType.name][defendingType.name]
-      })
-    });
-
-    return multiplier;
+  public get TypeEffectiveness(): typeof TypeEffectiveness {
+    return TypeEffectiveness;
   }
 }
