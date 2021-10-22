@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
-import { PokemonService } from "../pokemon/pokemon.service";
+import { PokeapiService } from "../pokemon/services/pokeapi.service";
 
 @Component({
   selector: 'app-main',
@@ -9,24 +8,29 @@ import { PokemonService } from "../pokemon/pokemon.service";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  pokemon$!: Observable<Pokemon[]>;
-  pokemon!: Pokemon[];
+  attacking!: Pokemon;
+  defending!: Pokemon;
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private pokemonService: PokeapiService) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.refreshPokemon()
   }
 
   ngOnDestroy() { }
 
   private refreshPokemon(): void {
-    this.pokemon$ = this.pokemonService.getRandomPokemon(2);
-    this.pokemon$.subscribe((value: Pokemon[]) => this.pokemon = value);
+    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
+      this.attacking = value;
+    });
+
+    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
+      this.defending = value;
+    });
   }
 
   public fight(guess: TypeEffectiveness): boolean {
-    const effectiveness = attack(this.pokemon[0], this.pokemon[1]);
+    const effectiveness = attack(this.attacking, this.defending);
     return guess == effectiveness;
   }
 
