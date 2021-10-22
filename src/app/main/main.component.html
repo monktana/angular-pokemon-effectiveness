@@ -1,11 +1,11 @@
 <div class="main-container">
   <!-- todo: score component -->
   <div class="score">
-    <p>High Score: 10</p>
+    <p>Score: {{score}} </p>
   </div>
   <div class="gameboard">
-    <app-pokemon [pokemon]="defending" *ngIf="defending"></app-pokemon>
-    <app-pokemon [pokemon]="attacking" *ngIf="attacking"></app-pokemon>
+    <app-pokemon [pokemon]="defending" [attacking]="false" *ngIf="defending"></app-pokemon>
+    <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
 
     <div class="decisions">
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.VeryEffective)">Very effective</button>
