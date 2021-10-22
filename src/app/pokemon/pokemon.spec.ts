@@ -1,49 +1,46 @@
-import { Pokemon, attack, TypeEffectiveness } from './pokemon';
+import { Pokemon, attack, TypeEffectiveness, Sprite } from './pokemon';
+
+const sprite: Sprite = {
+  back_default: '',
+  back_shiny: '',
+  front_default: '',
+  front_shiny: ''
+};
 
 describe('Pokemon Typematchup', () => {
   describe('one type per pokemon', () => {
     let bulbasaur: Pokemon = {
       name: 'bulbasaur',
-      picture: '',
-      types: [{
-        name: 'grass'
-      }]
+      sprites: sprite,
+      types: ['grass']
     };
 
     let shiggy: Pokemon = {
       name: 'shiggy',
-      picture: '',
-      types: [{
-        name: 'water'
-      }]
+      sprites: sprite,
+      types: ['water']
     };
 
     let charmander: Pokemon = {
       name: 'charmander',
-      picture: '',
-      types: [{
-        name: 'fire'
-      }]
+      sprites: sprite,
+      types: ['fire']
     };
 
     let gastly: Pokemon = {
       name: 'gastly',
-      picture: '',
-      types: [{
-        name: 'ghost'
-      }]
+      sprites: sprite,
+      types: ['ghost']
     };
 
     let rattata: Pokemon = {
       name: 'rattata',
-      picture: '',
-      types: [{
-        name: 'normal'
-      }]
+      sprites: sprite,
+      types: ['normal']
     };
 
-    it('is ineffective', () => {
-      expect(attack(gastly, rattata)).toBe(TypeEffectiveness.NotEffective);
+    it('has no effect', () => {
+      expect(attack(gastly, rattata)).toBe(TypeEffectiveness.NoEffect);
     });
 
     it('is not effective', () => {
@@ -62,44 +59,30 @@ describe('Pokemon Typematchup', () => {
   describe('two types per pokemon', () => {
     let venusaur: Pokemon = {
       name: 'venusaur',
-      picture: '',
-      types: [{
-        name: 'grass'
-      },{
-        name: 'poison'
-      }]
+      sprites: sprite,
+      types: ['grass','poison']
     };
 
     let charizard: Pokemon = {
       name: 'charmander',
-      picture: '',
-      types: [{
-        name: 'fire'
-      },{
-        name: 'flying'
-      }]
+      sprites: sprite,
+      types: ['fire','flying']
     };
 
     let gengar: Pokemon = {
       name: 'gengar',
-      picture: '',
-      types: [{
-        name: 'ghost'
-      },{
-        name: 'poison'
-      }]
+      sprites: sprite,
+      types: ['ghost','poison']
     };
 
     let raticate: Pokemon = {
       name: 'raticate',
-      picture: '',
-      types: [{
-        name: 'normal'
-      }]
+      sprites: sprite,
+      types: ['normal']
     };
 
-    it('is ineffective', () => {
-      expect(attack(gengar, raticate)).toBe(TypeEffectiveness.NotEffective);
+    it('has no effect', () => {
+      expect(attack(gengar, raticate)).toBe(TypeEffectiveness.NoEffect);
     });
 
     it('is not effective', () => {
