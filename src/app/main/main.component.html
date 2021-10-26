@@ -8,9 +8,9 @@
     <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
 
     <div class="decisions">
-      <button class="button decisions_button" (click)="fight(TypeEffectiveness.VeryEffective)">Very effective</button>
+      <button class="button decisions_button" (click)="fight(TypeEffectiveness.SuperEffective)">Super effective</button>
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.Effective)">Effective</button>
-      <button class="button decisions_button" (click)="fight(TypeEffectiveness.NotEffective)">Not effective</button>
+      <button class="button decisions_button" (click)="fight(TypeEffectiveness.NotVeryEffective)">Not very effective</button>
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.NoEffect)">No effect</button>
     </div>
   </div>

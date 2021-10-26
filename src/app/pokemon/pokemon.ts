@@ -15,9 +15,9 @@ export interface Sprite {
 
 export enum TypeEffectiveness {
   NoEffect,
-  NotEffective,
+  NotVeryEffective,
   Effective,
-  VeryEffective
+  SuperEffective
 }
 
 export function attack(attacking: Pokemon, target: Pokemon): TypeEffectiveness {
@@ -31,11 +31,11 @@ export function attack(attacking: Pokemon, target: Pokemon): TypeEffectiveness {
   
   switch (true) {
     case multiplier > 1:
-      return TypeEffectiveness.VeryEffective
+      return TypeEffectiveness.SuperEffective
     case multiplier == 1:
       return TypeEffectiveness.Effective
     case multiplier < 1 && multiplier > 0:
-      return TypeEffectiveness.NotEffective
+      return TypeEffectiveness.NotVeryEffective
     case multiplier == 0:
       return TypeEffectiveness.NoEffect
     default:
