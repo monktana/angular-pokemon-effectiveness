@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
+import { FirebaseService } from '../pokemon/services/firebase.service';
 import { PokeapiService } from "../pokemon/services/pokeapi.service";
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-main',
@@ -11,10 +13,13 @@ export class MainComponent implements OnInit {
   attacking!: Pokemon;
   defending!: Pokemon;
 
+  score!: number;
+
   constructor(private pokemonService: PokeapiService) { }
 
   ngOnInit() { 
-    this.refreshPokemon()
+    this.score = 0;
+    this.refreshPokemon();
   }
 
   ngOnDestroy() { }
@@ -29,9 +34,16 @@ export class MainComponent implements OnInit {
     });
   }
 
-  public fight(guess: TypeEffectiveness): boolean {
+  public fight(guess: TypeEffectiveness): void {
     const effectiveness = attack(this.attacking, this.defending);
-    return guess == effectiveness;
+    if (guess == effectiveness) {
+      this.refreshPokemon();
+      this.score++;
+      return;
+    }
+
+    this.score = 0;
+    console.log('GAME OVER');
   }
 
   public get TypeEffectiveness(): typeof TypeEffectiveness {
