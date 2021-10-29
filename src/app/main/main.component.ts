@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
-import { FirebaseService } from '../pokemon/services/firebase.service';
 import { PokeapiService } from "../pokemon/services/pokeapi.service";
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-main',
@@ -18,7 +16,6 @@ export class MainComponent implements OnInit {
   constructor(private pokemonService: PokeapiService) { }
 
   ngOnInit() { 
-    this.score = 0;
     this.refreshPokemon();
   }
 
@@ -38,11 +35,8 @@ export class MainComponent implements OnInit {
     const effectiveness = attack(this.attacking, this.defending);
     if (guess == effectiveness) {
       this.refreshPokemon();
-      this.score++;
       return;
     }
-
-    this.score = 0;
     console.log('GAME OVER');
   }
 

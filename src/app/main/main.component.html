@@ -1,8 +1,6 @@
 <div class="main-container">
   <!-- todo: score component -->
-  <div class="score">
-    <p>Score: {{score}} </p>
-  </div>
+  <app-roundscore></app-roundscore>
   <div class="gameboard">
     <app-pokemon [pokemon]="defending" [attacking]="false" *ngIf="defending"></app-pokemon>
     <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
