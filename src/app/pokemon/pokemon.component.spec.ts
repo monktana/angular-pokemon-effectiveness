@@ -9,17 +9,12 @@ describe('PokemonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PokemonComponent ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
+    });
     fixture = TestBed.createComponent(PokemonComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
   });
 });
