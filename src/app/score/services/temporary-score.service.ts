@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +7,15 @@ import { BehaviorSubject } from 'rxjs';
 export class TemporaryScoreService {
 
   private underlyingScore: number;
-  public score: BehaviorSubject<number>;
+  private score: BehaviorSubject<number>;
 
   constructor() {
     this.underlyingScore = 0;
     this.score = new BehaviorSubject<number>(this.underlyingScore);
+  }
+
+  public read(): Observable<number> {
+    return this.score.asObservable();
   }
 
   public increase(increment: number): void {

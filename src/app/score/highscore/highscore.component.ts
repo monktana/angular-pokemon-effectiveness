@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { LocalStorageScoreService } from '../services/local-storage-score.service';
 
 @Component({
   selector: 'app-highscore',
   templateUrl: './highscore.component.html',
   styleUrls: ['./highscore.component.scss']
 })
-export class HighscoreComponent implements OnInit {
+export class HighscoreComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor(public localStorageService: LocalStorageScoreService) { }
 
 }

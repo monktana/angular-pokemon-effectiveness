@@ -1,5 +1,7 @@
-export abstract class PersistentScoreService {
-  abstract read(): number;
+import { Observable } from 'rxjs';
 
-  abstract save(): void;
+export abstract class PersistentScoreService {
+  abstract observe(): Observable<number>;
+
+  abstract save(score: number): void;
 }
