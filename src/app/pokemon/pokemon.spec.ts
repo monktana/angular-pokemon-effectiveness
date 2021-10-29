@@ -44,7 +44,7 @@ describe('Pokemon Typematchup', () => {
     });
 
     it('is not effective', () => {
-      expect(attack(shiggy, bulbasaur)).toBe(TypeEffectiveness.NotEffective);
+      expect(attack(shiggy, bulbasaur)).toBe(TypeEffectiveness.NotVeryEffective);
     });
     
     it('is effective', () => {
@@ -52,7 +52,7 @@ describe('Pokemon Typematchup', () => {
     });
 
     it('is very effective', () => {
-      expect(attack(shiggy, charmander)).toBe(TypeEffectiveness.VeryEffective);
+      expect(attack(shiggy, charmander)).toBe(TypeEffectiveness.SuperEffective);
     });
   });
   
@@ -86,7 +86,7 @@ describe('Pokemon Typematchup', () => {
     });
 
     it('is not effective', () => {
-      expect(attack(venusaur, gengar)).toBe(TypeEffectiveness.NotEffective);
+      expect(attack(venusaur, gengar)).toBe(TypeEffectiveness.NotVeryEffective);
     });
     
     it('is effective', () => {
@@ -94,7 +94,7 @@ describe('Pokemon Typematchup', () => {
     });
 
     it('is very effective', () => {
-      expect(attack(charizard, venusaur)).toBe(TypeEffectiveness.VeryEffective);
+      expect(attack(charizard, venusaur)).toBe(TypeEffectiveness.SuperEffective);
     });
   });
 });
