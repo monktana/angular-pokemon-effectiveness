@@ -6,21 +6,21 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TemporaryScoreService {
 
-  private _score: number;
+  private underlyingScore: number;
   public score: BehaviorSubject<number>;
 
-  constructor() { 
-    this._score = 0;
-    this.score = new BehaviorSubject<number>(this._score);
+  constructor() {
+    this.underlyingScore = 0;
+    this.score = new BehaviorSubject<number>(this.underlyingScore);
   }
 
-  public increase(increment: number): void { 
-    this._score += increment;
-    this.score.next(this._score);
+  public increase(increment: number): void {
+    this.underlyingScore += increment;
+    this.score.next(this.underlyingScore);
   }
 
-  public reset(): void { 
-    this._score = 0;
-    this.score.next(this._score);
+  public reset(): void {
+    this.underlyingScore = 0;
+    this.score.next(this.underlyingScore);
   }
 }

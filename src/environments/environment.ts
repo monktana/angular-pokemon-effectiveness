@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyAWY6-Qzf6ImIujuvE0ahhwEynO8DHJER4",
-    authDomain: "pokemoneffectiveness.firebaseapp.com",
-    projectId: "pokemoneffectiveness",
-    storageBucket: "pokemoneffectiveness.appspot.com",
-    messagingSenderId: "689688156790",
-    appId: "1:689688156790:web:bb7633a7ca3848e77b1d57",
-    measurementId: "G-P62YC18WKG"
+    apiKey: 'AIzaSyAWY6-Qzf6ImIujuvE0ahhwEynO8DHJER4',
+    authDomain: 'pokemoneffectiveness.firebaseapp.com',
+    projectId: 'pokemoneffectiveness',
+    storageBucket: 'pokemoneffectiveness.appspot.com',
+    messagingSenderId: '689688156790',
+    appId: '1:689688156790:web:bb7633a7ca3848e77b1d57',
+    measurementId: 'G-P62YC18WKG'
   }
 };
 

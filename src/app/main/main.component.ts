@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
-import { PokeapiService } from "../pokemon/services/pokeapi.service";
+import { PokeapiService } from '../pokemon/services/pokeapi.service';
 
 @Component({
   selector: 'app-main',
@@ -15,11 +15,9 @@ export class MainComponent implements OnInit {
 
   constructor(private pokemonService: PokeapiService) { }
 
-  ngOnInit() { 
+  ngOnInit(): void {
     this.refreshPokemon();
   }
-
-  ngOnDestroy() { }
 
   private refreshPokemon(): void {
     this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
@@ -33,7 +31,7 @@ export class MainComponent implements OnInit {
 
   public fight(guess: TypeEffectiveness): void {
     const effectiveness = attack(this.attacking, this.defending);
-    if (guess == effectiveness) {
+    if (guess === effectiveness) {
       this.refreshPokemon();
       return;
     }
