@@ -15,7 +15,7 @@ export class MainComponent implements OnInit {
 
   score!: number;
 
-  constructor(private pokemonService: PokeapiService, 
+  constructor(private pokemonService: PokeapiService,
               private temporaryScoreService: TemporaryScoreService,
               private localStorageService: LocalStorageScoreService) { }
 
