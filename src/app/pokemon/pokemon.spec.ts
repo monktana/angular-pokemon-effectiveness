@@ -9,31 +9,31 @@ const sprite: Sprite = {
 
 describe('Pokemon Typematchup', () => {
   describe('one type per pokemon', () => {
-    let bulbasaur: Pokemon = {
+    const bulbasaur: Pokemon = {
       name: 'bulbasaur',
       sprites: sprite,
       types: ['grass']
     };
 
-    let shiggy: Pokemon = {
+    const shiggy: Pokemon = {
       name: 'shiggy',
       sprites: sprite,
       types: ['water']
     };
 
-    let charmander: Pokemon = {
+    const charmander: Pokemon = {
       name: 'charmander',
       sprites: sprite,
       types: ['fire']
     };
 
-    let gastly: Pokemon = {
+    const gastly: Pokemon = {
       name: 'gastly',
       sprites: sprite,
       types: ['ghost']
     };
 
-    let rattata: Pokemon = {
+    const rattata: Pokemon = {
       name: 'rattata',
       sprites: sprite,
       types: ['normal']
@@ -46,7 +46,7 @@ describe('Pokemon Typematchup', () => {
     it('is not effective', () => {
       expect(attack(shiggy, bulbasaur)).toBe(TypeEffectiveness.NotVeryEffective);
     });
-    
+
     it('is effective', () => {
       expect(attack(shiggy, rattata)).toBe(TypeEffectiveness.Effective);
     });
@@ -55,27 +55,27 @@ describe('Pokemon Typematchup', () => {
       expect(attack(shiggy, charmander)).toBe(TypeEffectiveness.SuperEffective);
     });
   });
-  
+
   describe('two types per pokemon', () => {
-    let venusaur: Pokemon = {
+    const venusaur: Pokemon = {
       name: 'venusaur',
       sprites: sprite,
-      types: ['grass','poison']
+      types: ['grass', 'poison']
     };
 
-    let charizard: Pokemon = {
+    const charizard: Pokemon = {
       name: 'charmander',
       sprites: sprite,
-      types: ['fire','flying']
+      types: ['fire', 'flying']
     };
 
-    let gengar: Pokemon = {
+    const gengar: Pokemon = {
       name: 'gengar',
       sprites: sprite,
-      types: ['ghost','poison']
+      types: ['ghost', 'poison']
     };
 
-    let raticate: Pokemon = {
+    const raticate: Pokemon = {
       name: 'raticate',
       sprites: sprite,
       types: ['normal']
@@ -88,7 +88,7 @@ describe('Pokemon Typematchup', () => {
     it('is not effective', () => {
       expect(attack(venusaur, gengar)).toBe(TypeEffectiveness.NotVeryEffective);
     });
-    
+
     it('is effective', () => {
       expect(attack(raticate, venusaur)).toBe(TypeEffectiveness.Effective);
     });

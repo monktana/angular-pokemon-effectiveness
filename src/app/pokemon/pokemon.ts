@@ -1,4 +1,4 @@
-import { typeMatchups } from "./typematrix";
+import { typeMatchups } from './typematrix';
 
 export interface Pokemon {
   name: string;
@@ -25,19 +25,19 @@ export function attack(attacking: Pokemon, target: Pokemon): TypeEffectiveness {
 
   attacking.types.forEach((attackingType: string) => {
     target.types.forEach((defendingType: string) => {
-      multiplier *= typeMatchups[attackingType][defendingType]
-    })
+      multiplier *= typeMatchups[attackingType][defendingType];
+    });
   });
-  
+
   switch (true) {
     case multiplier > 1:
-      return TypeEffectiveness.SuperEffective
-    case multiplier == 1:
-      return TypeEffectiveness.Effective
+      return TypeEffectiveness.SuperEffective;
+    case multiplier === 1:
+      return TypeEffectiveness.Effective;
     case multiplier < 1 && multiplier > 0:
-      return TypeEffectiveness.NotVeryEffective
-    case multiplier == 0:
-      return TypeEffectiveness.NoEffect
+      return TypeEffectiveness.NotVeryEffective;
+    case multiplier === 0:
+      return TypeEffectiveness.NoEffect;
     default:
       throw new Error(`unknown effectiveness: ${multiplier}`);
   }

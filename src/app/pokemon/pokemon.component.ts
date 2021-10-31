@@ -6,7 +6,7 @@ import { Pokemon } from './pokemon';
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss']
 })
-export class PokemonComponent implements OnInit {
+export class PokemonComponent implements OnInit, OnChanges {
 
   @Input() pokemon!: Pokemon;
   @Input() attacking!: boolean;
@@ -17,12 +17,12 @@ export class PokemonComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  ngOnChanges(changes: SimpleChanges) { 
+  ngOnChanges(changes: SimpleChanges): void {
     this.spriteUrl = this.determineSprite();
   }
 
-  private determineSprite(): string { 
-    const isShiny = (Math.round((Math.random() * 512)) == 206);
+  private determineSprite(): string {
+    const isShiny = (Math.round((Math.random() * 512)) === 206);
     if (isShiny) {
       if (this.attacking) {
         return this.pokemon.sprites.back_shiny;

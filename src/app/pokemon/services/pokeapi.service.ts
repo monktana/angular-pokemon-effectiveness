@@ -21,7 +21,7 @@ export class PokeapiService implements PokemonService {
 
   // nice 👌
   getRandomPokemon(): Observable<Pokemon> {
-    const random = Math.floor(Math.random() * 898 + 1)
+    const random = Math.floor(Math.random() * 898 + 1);
     return this.getPokemon(random);
   }
 

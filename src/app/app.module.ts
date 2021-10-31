@@ -10,12 +10,16 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { PokemonComponent } from './pokemon/pokemon.component';
+import { RoundscoreComponent } from './score/roundscore/roundscore.component';
+import { HighscoreComponent } from './score/highscore/highscore.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    PokemonComponent
+    PokemonComponent,
+    RoundscoreComponent,
+    HighscoreComponent
   ],
   imports: [
     BrowserModule,

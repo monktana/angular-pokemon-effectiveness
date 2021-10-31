@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
-import { FirebaseService } from '../pokemon/services/firebase.service';
-import { PokeapiService } from "../pokemon/services/pokeapi.service";
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { PokeapiService } from '../pokemon/services/pokeapi.service';
+import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
+import { TemporaryScoreService } from '../score/services/temporary-score.service';
 
 @Component({
   selector: 'app-main',
@@ -15,14 +15,13 @@ export class MainComponent implements OnInit {
 
   score!: number;
 
-  constructor(private pokemonService: PokeapiService) { }
+  constructor(private pokemonService: PokeapiService,
+              private temporaryScoreService: TemporaryScoreService,
+              private localStorageService: LocalStorageScoreService) { }
 
-  ngOnInit() { 
-    this.score = 0;
+  ngOnInit(): void {
     this.refreshPokemon();
   }
-
-  ngOnDestroy() { }
 
   private refreshPokemon(): void {
     this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
@@ -36,14 +35,18 @@ export class MainComponent implements OnInit {
 
   public fight(guess: TypeEffectiveness): void {
     const effectiveness = attack(this.attacking, this.defending);
-    if (guess == effectiveness) {
+    if (guess === effectiveness) {
       this.refreshPokemon();
-      this.score++;
+      this.temporaryScoreService.increase(1);
       return;
     }
 
-    this.score = 0;
-    console.log('GAME OVER');
+    this.temporaryScoreService
+        .read()
+        .subscribe(score => this.localStorageService.save(score))
+        .unsubscribe();
+
+    this.temporaryScoreService.reset();
   }
 
   public get TypeEffectiveness(): typeof TypeEffectiveness {
