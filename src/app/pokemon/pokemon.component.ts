@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Pokemon } from './pokemon';
 
 @Component({
@@ -6,7 +6,7 @@ import { Pokemon } from './pokemon';
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss']
 })
-export class PokemonComponent implements OnInit, OnChanges {
+export class PokemonComponent implements OnChanges {
 
   @Input() pokemon!: Pokemon;
   @Input() attacking!: boolean;
@@ -14,8 +14,6 @@ export class PokemonComponent implements OnInit, OnChanges {
   public spriteUrl!: string;
 
   constructor() { }
-
-  ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.spriteUrl = this.determineSprite();
