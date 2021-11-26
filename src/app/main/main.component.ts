@@ -4,6 +4,16 @@ import { PokeapiService } from '../pokemon/services/pokeapi.service';
 import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
 import { TemporaryScoreService } from '../score/services/temporary-score.service';
 
+enum State {
+  Menu,
+  Game,
+  GameOver
+}
+
+/**
+ * The sole purpose of the main component is to connect other components with each other.
+ * The component itself does not calculate or render anything.
+ */
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -15,12 +25,19 @@ export class MainComponent implements OnInit {
 
   score!: number;
 
+  public state!: State;
+
   constructor(private pokemonService: PokeapiService,
               private temporaryScoreService: TemporaryScoreService,
               private localStorageService: LocalStorageScoreService) { }
 
   ngOnInit(): void {
+    this.startGame();
+  }
+
+  public startGame(): void {
     this.refreshPokemon();
+    this.state = State.Game;
   }
 
   private refreshPokemon(): void {
@@ -47,9 +64,14 @@ export class MainComponent implements OnInit {
         .unsubscribe();
 
     this.temporaryScoreService.reset();
+    this.state = State.GameOver;
   }
 
   public get TypeEffectiveness(): typeof TypeEffectiveness {
     return TypeEffectiveness;
+  }
+
+  public get State(): typeof State {
+    return State;
   }
 }

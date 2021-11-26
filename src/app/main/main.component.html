@@ -1,8 +1,7 @@
 <div class="main-container">
-  <!-- todo: score component -->
   <app-roundscore></app-roundscore>
   <app-highscore></app-highscore>
-  <div class="gameboard">
+  <div class="gameboard" *ngIf="state === State.Game">
     <app-pokemon [pokemon]="defending" [attacking]="false" *ngIf="defending"></app-pokemon>
     <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
 
@@ -11,6 +10,12 @@
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.Effective)">Effective</button>
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.NotVeryEffective)">Not very effective</button>
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.NoEffect)">No effect</button>
+    </div>
+  </div>
+  <div class="gameover" *ngIf="state === State.GameOver">
+    <span>GAME OVER</span>
+    <div class="decisions">
+      <button class="button decisions_button" (click)="startGame()">New Game</button>
     </div>
   </div>
 </div>
