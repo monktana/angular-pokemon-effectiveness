@@ -1,7 +1,17 @@
 <div class="main-container">
-  <app-roundscore></app-roundscore>
-  <app-highscore></app-highscore>
+
+  <div class="menu" *ngIf="state === State.Menu">
+    <span>Gotta know 'em all</span>
+    
+    <div class="decisions">
+      <button class="button menu_button" (click)="startGame()">New Game</button>
+    </div>
+  </div>
+
   <div class="gameboard" *ngIf="state === State.Game">
+    <app-roundscore></app-roundscore>
+    <app-highscore></app-highscore>
+
     <app-pokemon [pokemon]="defending" [attacking]="false" *ngIf="defending"></app-pokemon>
     <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
 
@@ -12,10 +22,13 @@
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.NoEffect)">No effect</button>
     </div>
   </div>
+
   <div class="gameover" *ngIf="state === State.GameOver">
     <span>GAME OVER</span>
+
     <div class="decisions">
-      <button class="button decisions_button" (click)="startGame()">New Game</button>
+      <button class="button menu_button" (click)="startGame()">New Game</button>
+      <button class="button menu_button" (click)="showMenu()">Menu</button>
     </div>
   </div>
 </div>

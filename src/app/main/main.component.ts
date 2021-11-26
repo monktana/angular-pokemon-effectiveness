@@ -25,14 +25,18 @@ export class MainComponent implements OnInit {
 
   score!: number;
 
-  public state!: State;
+  state!: State;
 
   constructor(private pokemonService: PokeapiService,
               private temporaryScoreService: TemporaryScoreService,
               private localStorageService: LocalStorageScoreService) { }
 
   ngOnInit(): void {
-    this.startGame();
+    this.showMenu();
+  }
+
+  public showMenu(): void {
+    this.state = State.Menu;
   }
 
   public startGame(): void {
@@ -55,6 +59,7 @@ export class MainComponent implements OnInit {
     if (guess === effectiveness) {
       this.refreshPokemon();
       this.temporaryScoreService.increase(1);
+
       return;
     }
 
