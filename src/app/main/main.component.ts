@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
-import { PokeapiService } from '../pokemon/services/pokeapi.service';
-import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
-import { TemporaryScoreService } from '../score/services/temporary-score.service';
 
-enum State {
+export enum State {
   Menu,
   Game,
   GameOver
@@ -20,16 +16,10 @@ enum State {
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  attacking!: Pokemon;
-  defending!: Pokemon;
-
-  score!: number;
 
   state!: State;
 
-  constructor(private pokemonService: PokeapiService,
-              private temporaryScoreService: TemporaryScoreService,
-              private localStorageService: LocalStorageScoreService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.showMenu();
@@ -40,40 +30,7 @@ export class MainComponent implements OnInit {
   }
 
   public startGame(): void {
-    this.refreshPokemon();
     this.state = State.Game;
-  }
-
-  private refreshPokemon(): void {
-    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
-      this.attacking = value;
-    });
-
-    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
-      this.defending = value;
-    });
-  }
-
-  public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.attacking, this.defending);
-    if (guess === effectiveness) {
-      this.refreshPokemon();
-      this.temporaryScoreService.increase(1);
-
-      return;
-    }
-
-    this.temporaryScoreService
-        .read()
-        .subscribe(score => this.localStorageService.save(score))
-        .unsubscribe();
-
-    this.temporaryScoreService.reset();
-    this.state = State.GameOver;
-  }
-
-  public get TypeEffectiveness(): typeof TypeEffectiveness {
-    return TypeEffectiveness;
   }
 
   public get State(): typeof State {

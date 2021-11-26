@@ -1,0 +1,14 @@
+<div class="gameboard">
+  <app-roundscore></app-roundscore>
+  <app-highscore></app-highscore>
+
+  <app-pokemon [pokemon]="defending" [attacking]="false" (imageLoaded)="imageLoaded($event)" *ngIf="defending"></app-pokemon>
+  <app-pokemon [pokemon]="attacking" [attacking]="true" (imageLoaded)="imageLoaded($event)" *ngIf="attacking"></app-pokemon>
+
+  <div class="decisions">
+    <button class="button decisions_button" (click)="fight(TypeEffectiveness.SuperEffective)">Super effective</button>
+    <button class="button decisions_button" (click)="fight(TypeEffectiveness.Effective)">Effective</button>
+    <button class="button decisions_button" (click)="fight(TypeEffectiveness.NotVeryEffective)">Not very effective</button>
+    <button class="button decisions_button" (click)="fight(TypeEffectiveness.NoEffect)">No effect</button>
+  </div>
+</div>
