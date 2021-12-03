@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, AfterViewInit, OnDestroy, Output, SimpleChanges, ViewChild, EventEmitter, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { Pokemon } from './pokemon';
 
 @Component({
@@ -6,7 +6,7 @@ import { Pokemon } from './pokemon';
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss']
 })
-export class PokemonComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class PokemonComponent implements AfterViewInit {
 
   @Input() pokemon: Pokemon | undefined = undefined;
   @Input() attacking: boolean = false;
@@ -14,28 +14,16 @@ export class PokemonComponent implements OnChanges, OnInit, AfterViewInit, OnDes
   @Output() imageLoaded = new EventEmitter<string>();
 
   @ViewChild('sprite') spriteElement!: ElementRef;
-  spriteUrl!: string;
+  spriteUrl: string = '';
 
   constructor() { }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('pokemon component input changed');
-  }
-
-  ngOnInit(): void {
-    console.log('initializing pokemon component');
-  }
 
   async ngAfterViewInit(): Promise<any> {
     this.spriteUrl = this.determineSprite();
     await this.loadImage(this.spriteUrl, this.spriteElement.nativeElement);
     if (this.spriteElement.nativeElement.complete) {
-      this.imageLoaded.emit('loaded');
+      this.imageLoaded.emit(`${this.attacking ? 'attacking': 'defending'}ImageLoaded`);
     }
-  }
-
-  ngOnDestroy(): void {
-    console.log('destroying pokemon component');
   }
 
   private determineSprite(): string {

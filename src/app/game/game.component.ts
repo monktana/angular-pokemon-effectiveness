@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { State } from '../main/main.component';
 import { attack, Pokemon, TypeEffectiveness } from '../pokemon/pokemon';
 import { PokeapiService } from '../pokemon/services/pokeapi.service';
@@ -11,15 +11,16 @@ import { first } from 'rxjs/operators';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GameComponent implements OnInit {
 
   @Input() state!: State;
-  @Output() stateChange = new EventEmitter<State>();;
+  @Output() stateChange = new EventEmitter<State>();
 
   attacking: Pokemon | undefined;
   defending: Pokemon | undefined;
 
   private loadTasks: string[] = [];
+  public loaded: boolean = false;
 
   constructor(private pokemonService: PokeapiService,
               private temporaryScoreService: TemporaryScoreService,
@@ -27,28 +28,23 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.refreshPokemon();
-    console.log('initializing game component');
-  }
-
-  ngAfterViewInit(): void {
-    console.log('initialized game components view');
-  }
-
-  ngOnDestroy(): void {
-    console.log('destroying game component');
   }
 
   private async refreshPokemon(): Promise<any> {
-    this.loadTasks.push('apiResponse');
-    this.loadTasks.push('imagesLoaded');
+    this.loaded = false;
+    this.loadTasks.push('attackingPokemonLoaded');
+    this.loadTasks.push('attackingImageLoaded');
+    this.loadTasks.push('defendingPokemonLoaded');
+    this.loadTasks.push('defendingImageLoaded');
 
     this.attacking = undefined;
     this.defending = undefined;
 
     this.attacking = await this.pokemonService.getRandomPokemon().pipe(first()).toPromise();
-    this.defending = await this.pokemonService.getRandomPokemon().pipe(first()).toPromise();
+    this.loadTasks = this.loadTasks.filter((task) => task !== 'attackingPokemonLoaded');
 
-    this.loadTasks = this.loadTasks.filter((task) => task !== 'apiResponse')
+    this.defending = await this.pokemonService.getRandomPokemon().pipe(first()).toPromise();
+    this.loadTasks = this.loadTasks.filter((task) => task !== 'defendingPokemonLoaded');
   }
 
   public fight(guess: TypeEffectiveness): void {
@@ -75,7 +71,10 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public imageLoaded(message: string): void {
-    console.log(`image loaded on component ${message}`)
+    this.loadTasks = this.loadTasks.filter((task) => task !== message);
+    if (this.loadTasks.length == 0) {
+      this.loaded = true;
+    }
   }
 
   public get TypeEffectiveness(): typeof TypeEffectiveness {
