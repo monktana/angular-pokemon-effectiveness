@@ -12,6 +12,13 @@ export interface PokemonType {
   name: string;
 }
 
+export interface PokemonMove {
+  id: number;
+  name: string;
+  type: string;
+  learned_by_pokemon: {name: string, url: string}[]
+}
+
 export interface Sprite {
   back_default: string;
   back_shiny: string;

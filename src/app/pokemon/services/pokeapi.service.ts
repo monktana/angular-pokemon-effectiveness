@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Pokemon, PokemonType } from '../pokemon';
+import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemonservice';
 
 @Injectable({
@@ -22,16 +22,24 @@ export class PokeapiService implements PokemonService {
                     .pipe(map(this.parseTypeData));
   }
 
-  // nice 👌
+  getMove(id: number | string): Observable<PokemonMove> {
+    return this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${id}`)
+                    .pipe(map(this.parseMoveData));
+  }
+
   getRandomPokemon(): Observable<Pokemon> {
     const random = Math.floor(Math.random() * 898 + 1);
     return this.getPokemon(random);
   }
 
-  // also nice 👌
   getRandomType(): Observable<PokemonType> {
     const random = Math.floor(Math.random() * 18 + 1);
     return this.getType(random);
+  }
+
+  getRandomMove(): Observable<PokemonMove> {
+    const random = Math.floor(Math.random() * 826 + 1);
+    return this.getMove(random);
   }
 
   private parsePokemonData(data: any): Pokemon {
@@ -52,6 +60,15 @@ export class PokeapiService implements PokemonService {
     return {
       id: data.id,
       name: data.name
+    };
+  }
+
+  private parseMoveData(data: any): PokemonMove {
+    return {
+      id: data.id,
+      name: data.name,
+      type: data.type.name,
+      learned_by_pokemon: data.learned_by_pokemon
     };
   }
 }
