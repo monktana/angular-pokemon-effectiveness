@@ -3,8 +3,8 @@
   <app-roundscore></app-roundscore>
   <app-highscore></app-highscore>
   <div class="gameboard">
-    <app-pokemon [pokemon]="defending" [attacking]="false" *ngIf="defending"></app-pokemon>
-    <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
+    <app-pokemon [pokemon]="pokemon" *ngIf="pokemon"></app-pokemon>
+    <app-pokemontype [type]="type" *ngIf="type"></app-pokemontype>
 
     <div class="decisions">
       <button class="button decisions_button" (click)="fight(TypeEffectiveness.SuperEffective)">Super effective</button>

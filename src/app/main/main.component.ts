@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
+import { Pokemon, PokemonType, TypeEffectiveness, attack } from '../pokemon/pokemon';
 import { PokeapiService } from '../pokemon/services/pokeapi.service';
 import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
 import { TemporaryScoreService } from '../score/services/temporary-score.service';
@@ -10,8 +10,8 @@ import { TemporaryScoreService } from '../score/services/temporary-score.service
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  attacking!: Pokemon;
-  defending!: Pokemon;
+  type!: PokemonType;
+  pokemon!: Pokemon;
 
   score!: number;
 
@@ -20,23 +20,23 @@ export class MainComponent implements OnInit {
               private localStorageService: LocalStorageScoreService) { }
 
   ngOnInit(): void {
-    this.refreshPokemon();
+    this.refresh();
   }
 
-  private refreshPokemon(): void {
-    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
-      this.attacking = value;
+  private refresh(): void {
+    this.pokemonService.getRandomType().subscribe((type: PokemonType) => {
+      this.type = { ...type };
     });
 
-    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
-      this.defending = value;
+    this.pokemonService.getRandomPokemon().subscribe((pokemon: Pokemon) => {
+      this.pokemon = { ...pokemon };
     });
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.attacking, this.defending);
+    const effectiveness = attack(this.type.name, this.pokemon);
     if (guess === effectiveness) {
-      this.refreshPokemon();
+      this.refresh();
       this.temporaryScoreService.increase(1);
       return;
     }
