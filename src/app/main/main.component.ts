@@ -10,9 +10,9 @@ import { TemporaryScoreService } from '../score/services/temporary-score.service
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  move!: PokemonMove;
-  attacking!: Pokemon;
-  defending!: Pokemon;
+  currentRound!: {move: PokemonMove, attacking: Pokemon, defending: Pokemon}
+  nextRound!: {move: PokemonMove, attacking: Pokemon, defending: Pokemon}
+
   score!: number;
 
   constructor(private pokemonService: PokeapiService,
@@ -20,21 +20,26 @@ export class MainComponent implements OnInit {
               private localStorageService: LocalStorageScoreService) { }
 
   async ngOnInit(): Promise<void> {
-    await this.refresh();
+    this.currentRound = await this.loadRound();
+    this.nextRound = await this.loadRound();
   }
 
-  private async refresh(): Promise<void> {
-    this.move = await this.pokemonService.getRandomMove();
-    const movePokemon = this.move.learned_by_pokemon[Math.floor(Math.random() * this.move.learned_by_pokemon.length)].name;
-    this.attacking = await this.pokemonService.getPokemon(movePokemon);
+  private async loadRound(): Promise<any> {
+    const move = await this.pokemonService.getRandomMove();
+    const movePokemon = move.learned_by_pokemon[Math.floor(Math.random() * move.learned_by_pokemon.length)].name;
+    const attacking = await this.pokemonService.getPokemon(movePokemon);
 
-    this.defending = await this.pokemonService.getRandomPokemon();
+    const defending = await this.pokemonService.getRandomPokemon();
+
+    return {move, attacking, defending};
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.move.type, this.defending);
+    const effectiveness = attack(this.currentRound.move.type, this.currentRound.defending);
     if (guess === effectiveness) {
-      this.refresh();
+      this.currentRound = this.nextRound;
+      this.loadRound().then((round) => this.nextRound = round);
+
       this.temporaryScoreService.increase(1);
       return;
     }

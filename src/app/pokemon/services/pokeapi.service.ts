@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemonservice';
@@ -12,7 +11,7 @@ export class PokeapiService implements PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  async getPokemon(id: number | string): Promise<Pokemon> {
+  getPokemon(id: number | string): Promise<Pokemon> {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
                     .pipe(map(this.parsePokemonData))
                     .toPromise()!;

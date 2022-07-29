@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { Pokemon, PokemonType } from '../pokemon';
 
 export abstract class PokemonService {
