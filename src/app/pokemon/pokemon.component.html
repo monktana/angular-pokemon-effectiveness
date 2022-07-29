@@ -4,10 +4,10 @@
       <img src="{{spriteUrl}}" alt="" class="sprite">
     </div>
     <div class="pokemon-name">
-      <p>{{pokemon.name}}</p>
+      <p>{{pokemon?.name}}</p>
     </div>
     <div class="pokemon-types__wrapper">
-      <div class="pokemon-types__chip pokemon-types__chip-{{type}}" *ngFor="let type of pokemon.types">
+      <div class="pokemon-types__chip pokemon-types__chip-{{type}}" *ngFor="let type of pokemon?.types">
         {{type}}
       </div>
     </div>

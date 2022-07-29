@@ -12,32 +12,35 @@ export class PokeapiService implements PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemon(id: number | string): Observable<Pokemon> {
+  async getPokemon(id: number | string): Promise<Pokemon> {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                    .pipe(map(this.parsePokemonData));
+                    .pipe(map(this.parsePokemonData))
+                    .toPromise()!;
   }
 
-  getType(id: number | string): Observable<PokemonType> {
+  getType(id: number | string): Promise<PokemonType> {
     return this.http.get<PokemonType>(`https://pokeapi.co/api/v2/type/${id}`)
-                    .pipe(map(this.parseTypeData));
+                    .pipe(map(this.parseTypeData))
+                    .toPromise();
   }
 
-  getMove(id: number | string): Observable<PokemonMove> {
+  getMove(id: number | string): Promise<PokemonMove> {
     return this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${id}`)
-                    .pipe(map(this.parseMoveData));
+                    .pipe(map(this.parseMoveData))
+                    .toPromise();
   }
 
-  getRandomPokemon(): Observable<Pokemon> {
+  getRandomPokemon(): Promise<Pokemon> {
     const random = Math.floor(Math.random() * 898 + 1);
     return this.getPokemon(random);
   }
 
-  getRandomType(): Observable<PokemonType> {
+  getRandomType(): Promise<PokemonType> {
     const random = Math.floor(Math.random() * 18 + 1);
     return this.getType(random);
   }
 
-  getRandomMove(): Observable<PokemonMove> {
+  getRandomMove(): Promise<PokemonMove> {
     const random = Math.floor(Math.random() * 826 + 1);
     return this.getMove(random);
   }

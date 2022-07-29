@@ -3,9 +3,9 @@ import { Pokemon, PokemonType } from '../pokemon';
 
 export abstract class PokemonService {
 
-  abstract getPokemon(id: number | string): Observable<Pokemon>;
+  abstract getPokemon(id: number | string): Promise<Pokemon>;
 
-  abstract getType(id: number | string): Observable<PokemonType>;
+  abstract getType(id: number | string): Promise<PokemonType>;
 
-  abstract getRandomPokemon(): Observable<Pokemon>;
+  abstract getRandomPokemon(): Promise<Pokemon>;
 }
