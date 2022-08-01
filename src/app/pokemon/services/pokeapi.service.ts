@@ -13,19 +13,19 @@ export class PokeapiService implements PokemonService {
 
   getPokemon(id: number | string): Promise<Pokemon> {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                    .pipe(map(this.parsePokemonData))
-                    .toPromise()!;
+                    .pipe(map(this.parseData<Pokemon>))
+                    .toPromise();
   }
 
   getType(id: number | string): Promise<PokemonType> {
     return this.http.get<PokemonType>(`https://pokeapi.co/api/v2/type/${id}`)
-                    .pipe(map(this.parseTypeData))
+                    .pipe(map(this.parseData<PokemonType>))
                     .toPromise();
   }
 
   getMove(id: number | string): Promise<PokemonMove> {
     return this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${id}`)
-                    .pipe(map(this.parseMoveData))
+                    .pipe(map(this.parseData<PokemonMove>))
                     .toPromise();
   }
 
@@ -44,33 +44,7 @@ export class PokeapiService implements PokemonService {
     return this.getMove(random);
   }
 
-  private parsePokemonData(data: any): Pokemon {
-    return {
-      id: data.id,
-      name: data.name,
-      sprites: {
-        back_default: data.sprites.back_default,
-        back_shiny: data.sprites.back_shiny,
-        front_default: data.sprites.front_default,
-        front_shiny: data.sprites.front_shiny
-      },
-      types: data.types.map((t: any) => t.type.name)
-    };
-  }
-
-  private parseTypeData(data: any): PokemonType {
-    return {
-      id: data.id,
-      name: data.name
-    };
-  }
-
-  private parseMoveData(data: any): PokemonMove {
-    return {
-      id: data.id,
-      name: data.name,
-      type: data.type.name,
-      learned_by_pokemon: data.learned_by_pokemon
-    };
+  private parseData<T>(data: any): T {
+    return <T> data;
   }
 }

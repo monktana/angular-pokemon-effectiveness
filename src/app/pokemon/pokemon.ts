@@ -4,7 +4,7 @@ export interface Pokemon {
   id: number;
   name: string;
   sprites: Sprite;
-  types: string[];
+  types: {slot: number, type: {name: string, url: string}}[];
 }
 
 export interface PokemonType {
@@ -15,8 +15,9 @@ export interface PokemonType {
 export interface PokemonMove {
   id: number;
   name: string;
-  type: string;
-  learned_by_pokemon: {name: string, url: string}[]
+  type: {name: string, url: string};
+  learned_by_pokemon: {name: string, url: string}[];
+  names: {name: string, language: {name: string, url: string}}[];
 }
 
 export interface Sprite {
@@ -36,8 +37,8 @@ export enum TypeEffectiveness {
 export function attack(attacking: string, target: Pokemon): TypeEffectiveness {
   let multiplier = 1;
 
-  target.types.forEach((defendingType: string) => {
-    multiplier *= typeMatchups[attacking][defendingType];
+  target.types.forEach((defendingType: any) => {
+    multiplier *= typeMatchups[attacking][defendingType.type.name];
   });
 
   switch (true) {

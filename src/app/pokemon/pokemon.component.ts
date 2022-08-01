@@ -27,17 +27,17 @@ export class PokemonComponent implements OnChanges {
     }
 
     if (this.attacking && this.isShiny) {
-      return this.pokemon.sprites.front_shiny;
-    }
-
-    if (this.attacking && !this.isShiny) {
-      return this.pokemon.sprites.front_default;
-    }
-
-    if (!this.attacking && this.isShiny) {
       return this.pokemon.sprites.back_shiny;
     }
 
-    return this.pokemon.sprites.back_default;
+    if (this.attacking && !this.isShiny) {
+      return this.pokemon.sprites.back_default;
+    }
+
+    if (!this.attacking && this.isShiny) {
+      return this.pokemon.sprites.front_shiny;
+    }
+
+    return this.pokemon.sprites.front_default;
   }
 }

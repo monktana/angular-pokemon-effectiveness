@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.currentRound.move.type, this.currentRound.defending);
+    const effectiveness = attack(this.currentRound.move.type.name, this.currentRound.defending);
     if (guess === effectiveness) {
       this.currentRound = this.nextRound;
       this.loadRound().then((round) => this.nextRound = round);
@@ -50,9 +50,5 @@ export class MainComponent implements OnInit {
         .unsubscribe();
 
     this.temporaryScoreService.reset();
-  }
-
-  public get TypeEffectiveness(): typeof TypeEffectiveness {
-    return TypeEffectiveness;
   }
 }
