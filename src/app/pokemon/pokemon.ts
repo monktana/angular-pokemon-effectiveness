@@ -15,6 +15,7 @@ export interface PokemonType {
 export interface PokemonMove {
   id: number;
   name: string;
+  power: number | null;
   type: {name: string, url: string};
   learned_by_pokemon: {name: string, url: string}[];
   names: {name: string, language: {name: string, url: string}}[];

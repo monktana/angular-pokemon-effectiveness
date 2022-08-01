@@ -20,8 +20,17 @@ export class MainComponent implements OnInit {
               private localStorageService: LocalStorageScoreService) { }
 
   async ngOnInit(): Promise<void> {
-    this.currentRound = await this.loadRound();
-    this.nextRound = await this.loadRound();
+    try {
+      this.currentRound = await this.loadRound();
+    } catch (error) {
+      console.log({msg: 'error loading round', error});
+    }
+    
+    try {
+      this.nextRound = await this.loadRound();
+    } catch (error) {
+      console.log({msg: 'error loading round', error});
+    }
   }
 
   private async loadRound(): Promise<any> {
@@ -38,7 +47,7 @@ export class MainComponent implements OnInit {
     const effectiveness = attack(this.currentRound.move.type.name, this.currentRound.defending);
     if (guess === effectiveness) {
       this.currentRound = this.nextRound;
-      this.loadRound().then((round) => this.nextRound = round);
+      this.loadRound().then((round) => this.nextRound = round).catch((reason) => console.log({msg: 'error loading round', reason}));
 
       this.temporaryScoreService.increase(1);
       return;
