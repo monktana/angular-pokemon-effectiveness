@@ -1,16 +1,9 @@
 <div class="main-container">
-  <!-- todo: score component -->
   <app-roundscore></app-roundscore>
   <app-highscore></app-highscore>
   <div class="gameboard">
-    <app-pokemon [pokemon]="defending" [attacking]="false" *ngIf="defending"></app-pokemon>
-    <app-pokemon [pokemon]="attacking" [attacking]="true" *ngIf="attacking"></app-pokemon>
-
-    <div class="decisions">
-      <button class="button decisions_button" (click)="fight(TypeEffectiveness.SuperEffective)">Super effective</button>
-      <button class="button decisions_button" (click)="fight(TypeEffectiveness.Effective)">Effective</button>
-      <button class="button decisions_button" (click)="fight(TypeEffectiveness.NotVeryEffective)">Not very effective</button>
-      <button class="button decisions_button" (click)="fight(TypeEffectiveness.NoEffect)">No effect</button>
-    </div>
+    <app-pokemon [pokemon]="currentRound.defending" *ngIf="currentRound"></app-pokemon>
+    <app-pokemon [pokemon]="currentRound.attacking" [attacking]="true" *ngIf="currentRound"></app-pokemon>
+    <app-pokemonmove [move]="currentRound.move" [pokemon]="currentRound.attacking" (fight)="fight($event)" *ngIf="currentRound"></app-pokemonmove>
   </div>
 </div>

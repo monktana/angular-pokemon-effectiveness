@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, TypeEffectiveness, attack } from '../pokemon/pokemon';
+import { Pokemon, TypeEffectiveness, attack, PokemonMove } from '../pokemon/pokemon';
 import { PokeapiService } from '../pokemon/services/pokeapi.service';
 import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
 import { TemporaryScoreService } from '../score/services/temporary-score.service';
@@ -10,8 +10,8 @@ import { TemporaryScoreService } from '../score/services/temporary-score.service
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  attacking!: Pokemon;
-  defending!: Pokemon;
+  currentRound!: {move: PokemonMove, attacking: Pokemon, defending: Pokemon}
+  nextRound!: {move: PokemonMove, attacking: Pokemon, defending: Pokemon}
 
   score!: number;
 
@@ -19,24 +19,36 @@ export class MainComponent implements OnInit {
               private temporaryScoreService: TemporaryScoreService,
               private localStorageService: LocalStorageScoreService) { }
 
-  ngOnInit(): void {
-    this.refreshPokemon();
+  async ngOnInit(): Promise<void> {
+    try {
+      this.currentRound = await this.loadRound();
+    } catch (error) {
+      console.log({msg: 'error loading round', error});
+    }
+    
+    try {
+      this.nextRound = await this.loadRound();
+    } catch (error) {
+      console.log({msg: 'error loading round', error});
+    }
   }
 
-  private refreshPokemon(): void {
-    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
-      this.attacking = value;
-    });
+  private async loadRound(): Promise<any> {
+    const move = await this.pokemonService.getRandomMove();
+    const movePokemon = move.learned_by_pokemon[Math.floor(Math.random() * move.learned_by_pokemon.length)].name;
+    const attacking = await this.pokemonService.getPokemon(movePokemon);
 
-    this.pokemonService.getRandomPokemon().subscribe((value: Pokemon) => {
-      this.defending = value;
-    });
+    const defending = await this.pokemonService.getRandomPokemon();
+
+    return {move, attacking, defending};
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.attacking, this.defending);
+    const effectiveness = attack(this.currentRound.move.type.name, this.currentRound.defending);
     if (guess === effectiveness) {
-      this.refreshPokemon();
+      this.currentRound = this.nextRound;
+      this.loadRound().then((round) => this.nextRound = round).catch((reason) => console.log({msg: 'error loading round', reason}));
+
       this.temporaryScoreService.increase(1);
       return;
     }
@@ -47,9 +59,5 @@ export class MainComponent implements OnInit {
         .unsubscribe();
 
     this.temporaryScoreService.reset();
-  }
-
-  public get TypeEffectiveness(): typeof TypeEffectiveness {
-    return TypeEffectiveness;
   }
 }

@@ -1,9 +1,10 @@
-import { Observable } from 'rxjs';
-import { Pokemon } from '../pokemon';
+import { Pokemon, PokemonType } from '../pokemon';
 
 export abstract class PokemonService {
 
-  abstract getPokemon(id: number): Observable<Pokemon>;
+  abstract getPokemon(id: number | string): Promise<Pokemon>;
 
-  abstract getRandomPokemon(): Observable<Pokemon>;
+  abstract getType(id: number | string): Promise<PokemonType>;
+
+  abstract getRandomPokemon(): Promise<Pokemon>;
 }

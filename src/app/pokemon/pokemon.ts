@@ -1,9 +1,24 @@
 import { typeMatchups } from './typematrix';
 
 export interface Pokemon {
+  id: number;
   name: string;
   sprites: Sprite;
-  types: string[];
+  types: {slot: number, type: {name: string, url: string}}[];
+}
+
+export interface PokemonType {
+  id: number;
+  name: string;
+}
+
+export interface PokemonMove {
+  id: number;
+  name: string;
+  power: number | null;
+  type: {name: string, url: string};
+  learned_by_pokemon: {name: string, url: string}[];
+  names: {name: string, language: {name: string, url: string}}[];
 }
 
 export interface Sprite {
@@ -20,13 +35,11 @@ export enum TypeEffectiveness {
   SuperEffective
 }
 
-export function attack(attacking: Pokemon, target: Pokemon): TypeEffectiveness {
+export function attack(attacking: string, target: Pokemon): TypeEffectiveness {
   let multiplier = 1;
 
-  attacking.types.forEach((attackingType: string) => {
-    target.types.forEach((defendingType: string) => {
-      multiplier *= typeMatchups[attackingType][defendingType];
-    });
+  target.types.forEach((defendingType: any) => {
+    multiplier *= typeMatchups[attacking][defendingType.type.name];
   });
 
   switch (true) {

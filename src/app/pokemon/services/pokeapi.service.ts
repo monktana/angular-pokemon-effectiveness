@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Pokemon } from '../pokemon';
+import { defer } from 'rxjs';
+import { map, retry } from 'rxjs/operators';
+import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemonservice';
 
 @Injectable({
@@ -12,29 +12,68 @@ export class PokeapiService implements PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemon(id: number): Observable<Pokemon> {
+  getPokemon(id: number | string): Promise<Pokemon> {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                    .pipe(
-                      map(this.parseApiData)
-                    );
+                    .pipe(map(this.parseData<Pokemon>),
+                          retry(3))
+                    .toPromise();
   }
 
-  // nice 👌
-  getRandomPokemon(): Observable<Pokemon> {
-    const random = Math.floor(Math.random() * 898 + 1);
-    return this.getPokemon(random);
+  getType(id: number | string): Promise<PokemonType> {
+    return this.http.get<PokemonType>(`https://pokeapi.co/api/v2/type/${id}`)
+                    .pipe(map(this.parseData<PokemonType>),
+                          retry(3))
+                    .toPromise();
   }
 
-  private parseApiData(data: any): Pokemon {
-    return {
-      name: data.name,
-      sprites: {
-        back_default: data.sprites.back_default,
-        back_shiny: data.sprites.back_shiny,
-        front_default: data.sprites.front_default,
-        front_shiny: data.sprites.front_shiny
-      },
-      types: data.types.map((t: any) => t.type.name)
-    };
+  getMove(id: number | string): Promise<PokemonMove> {
+    return this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${id}`)
+                    .pipe(map(this.parseData<PokemonMove>),
+                          retry(3))
+                    .toPromise();
+  }
+
+  getRandomNumber(ceiling: number): number {
+    return Math.floor(Math.random() * ceiling + 1);
+  }
+
+  getRandomPokemon(): Promise<Pokemon> {
+    return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/pokemon/${this.getRandomNumber(898)}`))
+                                .pipe(map((response) => {
+                                        const pokemon = this.parseData<Pokemon>(response);
+                                        if (!pokemon.sprites.front_default || !pokemon.sprites.back_default) {
+                                          throw new Error(`pokémon without sprite(s)_ ${pokemon.name}`);
+                                        }
+
+                                        return pokemon;
+                                      }),
+                                    retry(3))
+                                .toPromise();
+  }
+
+  getRandomType(): Promise<PokemonType> {
+    return this.getType(this.getRandomNumber(18));
+  }
+
+  getRandomMove(): Promise<PokemonMove> {
+    return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${this.getRandomNumber(826)}`))
+                                .pipe(map((response) => {
+                                        const move = this.parseData<PokemonMove>(response);
+                                        if (move.learned_by_pokemon.length === 0) {
+                                          throw new Error(`move not learned by any pokémon: ${move.name}`);
+                                        }
+
+                                        if (!move.power) {
+                                          throw new Error(`move without power: ${move.name}`);
+                                        }
+
+                                        return move;
+                                      }),
+                                    retry(3))
+                                .toPromise();
+  }
+
+  private parseData<T>(data: any): T {
+    return <T> data;
   }
 }

@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { PokemonComponent } from './pokemon/pokemon.component';
 import { RoundscoreComponent } from './score/roundscore/roundscore.component';
 import { HighscoreComponent } from './score/highscore/highscore.component';
+import { PokemonmoveComponent } from './pokemon/pokemonmove/pokemonmove.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HighscoreComponent } from './score/highscore/highscore.component';
     MainComponent,
     PokemonComponent,
     RoundscoreComponent,
-    HighscoreComponent
+    HighscoreComponent,
+    PokemonmoveComponent
   ],
   imports: [
     BrowserModule,
