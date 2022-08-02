@@ -3,6 +3,11 @@
 A small browser game to learn the Pokémon type matchups.
 > The idea is inspired by [The Higher Lower Game](http://www.higherlowergame.com/).
 
+It is build using [Angular](https://angular.io/) and based on the data of the [PokéAPI](https://pokeapi.co/).
+
+## Project Setup
+*todo*
+
 ## Contributing
 All contributions are welcome!
 Please see the [issues on GitHub](https://github.com/monktana/angular-pokemon-effectiveness/issues) before you submit a pull request or raise an issue.
