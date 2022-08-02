@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
+import { defer } from 'rxjs';
 import { map, retry } from 'rxjs/operators';
 import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemonservice';
@@ -39,17 +39,16 @@ export class PokeapiService implements PokemonService {
 
   getRandomPokemon(): Promise<Pokemon> {
     return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/pokemon/${this.getRandomNumber(898)}`))
-    .pipe(map((response) => {
-            const pokemon = this.parseData<Pokemon>(response);
-            if (!pokemon.sprites.front_default || !pokemon.sprites.back_default) {
-              console.log({msg: 'pokémon without sprite(s)', pokemon});
-              throw new Error('pokémon without sprite(s)');
-            }
+                                .pipe(map((response) => {
+                                        const pokemon = this.parseData<Pokemon>(response);
+                                        if (!pokemon.sprites.front_default || !pokemon.sprites.back_default) {
+                                          throw new Error(`pokémon without sprite(s)_ ${pokemon.name}`);
+                                        }
 
-            return pokemon;
-          }),
-        retry(3))
-    .toPromise();
+                                        return pokemon;
+                                      }),
+                                    retry(3))
+                                .toPromise();
   }
 
   getRandomType(): Promise<PokemonType> {
@@ -58,22 +57,20 @@ export class PokeapiService implements PokemonService {
 
   getRandomMove(): Promise<PokemonMove> {
     return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${this.getRandomNumber(826)}`))
-    .pipe(map((response) => {
-            const move = this.parseData<PokemonMove>(response);
-            if (move.learned_by_pokemon.length === 0) {
-              console.log({msg: 'move not learned by any pokémon', move});
-              throw new Error('move not learned by any pokémon');
-            }
+                                .pipe(map((response) => {
+                                        const move = this.parseData<PokemonMove>(response);
+                                        if (move.learned_by_pokemon.length === 0) {
+                                          throw new Error(`move not learned by any pokémon: ${move.name}`);
+                                        }
 
-            if (!move.power) {
-              console.log({msg: 'move without power', move});
-              throw new Error('move without power');
-            }
+                                        if (!move.power) {
+                                          throw new Error(`move without power: ${move.name}`);
+                                        }
 
-            return move;
-          }),
-        retry(3))
-    .toPromise();
+                                        return move;
+                                      }),
+                                    retry(3))
+                                .toPromise();
   }
 
   private parseData<T>(data: any): T {
