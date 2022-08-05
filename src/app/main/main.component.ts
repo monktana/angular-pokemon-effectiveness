@@ -35,7 +35,7 @@ export class MainComponent implements OnInit {
 
   private async loadRound(): Promise<any> {
     const move = await this.pokemonService.getRandomMove();
-    
+
     const attackingPokemon = move.learned_by_pokemon[Math.floor(Math.random() * move.learned_by_pokemon.length)].url;
     let matches = attackingPokemon.match(/(\d{2,5})(?=\/$)/g);
     if (!matches) {

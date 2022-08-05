@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { defer } from 'rxjs';
-import { map, retry } from 'rxjs/operators';
+import { map, retry, tap } from 'rxjs/operators';
 import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemonservice';
 
@@ -14,7 +14,8 @@ export class PokeapiService implements PokemonService {
 
   getPokemon(id: number | string): Promise<Pokemon> {
     return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                    .pipe(map(this.parseData<Pokemon>),
+                    .pipe(tap(this.validate),
+                          map(this.parseData<Pokemon>),
                           retry(3))
                     .toPromise();
   }
@@ -28,7 +29,8 @@ export class PokeapiService implements PokemonService {
 
   getMove(id: number | string): Promise<PokemonMove> {
     return this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${id}`)
-                    .pipe(map(this.parseData<PokemonMove>),
+                    .pipe(tap(this.validate),
+                          map(this.parseData<PokemonMove>),
                           retry(3))
                     .toPromise();
   }
@@ -39,15 +41,9 @@ export class PokeapiService implements PokemonService {
 
   getRandomPokemon(): Promise<Pokemon> {
     return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/pokemon/${this.getRandomNumber(898)}`))
-                                .pipe(map((response) => {
-                                        const pokemon = this.parseData<Pokemon>(response);
-                                        if (!pokemon.sprites.front_default || !pokemon.sprites.back_default) {
-                                          throw new Error(`pokémon without sprite(s)_ ${pokemon.name}`);
-                                        }
-
-                                        return pokemon;
-                                      }),
-                                    retry(3))
+                                .pipe(tap(this.validate),
+                                      map(this.parseData<Pokemon>),
+                                      retry(3))
                                 .toPromise();
   }
 
@@ -57,23 +53,27 @@ export class PokeapiService implements PokemonService {
 
   getRandomMove(): Promise<PokemonMove> {
     return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${this.getRandomNumber(826)}`))
-                                .pipe(map((response) => {
-                                        const move = this.parseData<PokemonMove>(response);
-                                        if (move.learned_by_pokemon.length === 0) {
-                                          throw new Error(`move not learned by any pokémon: ${move.name}`);
-                                        }
-
-                                        if (!move.power) {
-                                          throw new Error(`move without power: ${move.name}`);
-                                        }
-
-                                        return move;
-                                      }),
-                                    retry(3))
+                                .pipe(tap(this.validate),
+                                      map(this.parseData<PokemonMove>),
+                                      retry(3))
                                 .toPromise();
   }
 
   private parseData<T>(data: any): T {
     return <T> data;
+  }
+
+  private validate(data: {[key: string]: any}): void {
+    if (data.hasOwnProperty('sprites') && (!data.sprites.front_default || !data.sprites.back_default)) {
+      throw new Error(`pokémon without sprite(s): ${data.name}`);
+    }
+
+    if (data.hasOwnProperty('learned_by_pokemon') && data.learned_by_pokemon.length === 0) {
+      throw new Error(`move not learned by any pokémon: ${data.name}`);
+    }
+
+    if (data.hasOwnProperty('power') && !data.power) {
+      throw new Error(`move without power: ${data.name}`);
+    }
   }
 }
