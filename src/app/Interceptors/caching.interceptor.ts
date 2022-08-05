@@ -23,11 +23,9 @@ export class CachingInterceptor implements HttpInterceptor {
 
     const cachedResponse = this.cache.get(request.url);
     if (!cachedResponse) {
-      console.log(`request not cached: ${request.url}`);
       return this.sendRequest(request, next);
     }
 
-    console.log(`request cached: ${request.url}`);
     return of(cachedResponse);
   }
 
@@ -35,7 +33,6 @@ export class CachingInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          console.log(`caching request: ${request.url}`);
           this.cache.set(request.url, event);
         }
       })
