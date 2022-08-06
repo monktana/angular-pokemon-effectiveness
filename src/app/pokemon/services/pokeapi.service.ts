@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { defer } from 'rxjs';
-import { map, retry, tap } from 'rxjs/operators';
-import { Pokemon, PokemonMove } from '../pokemon';
+import { Observable, zip } from 'rxjs';
+import { map, retry } from 'rxjs/operators';
+import { Matchup, Pokemon, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemon.service';
 
 @Injectable({
@@ -10,23 +10,22 @@ import { PokemonService } from './pokemon.service';
 })
 export class PokeapiService implements PokemonService {
 
-  readonly API_URL: string = "https://pokeapi.co/api/v2"
+  readonly MAX_RETRY_COUNT = 9;
+  readonly API_URL: string = "https://pokeapi.co/api/v2";
 
   constructor(private http: HttpClient) { }
 
   getPokemon(id: number | string): Promise<Pokemon> {
     return this.http.get<Pokemon>(`${this.API_URL}/pokemon/${id}`)
-                    .pipe(tap(this.validate),
-                          map(this.parseData<Pokemon>),
-                          retry(3))
+                    .pipe(map(this.parseData<Pokemon>),
+                          retry(this.MAX_RETRY_COUNT))
                     .toPromise();
   }
 
   getMove(id: number | string): Promise<PokemonMove> {
     return this.http.get<PokemonMove>(`${this.API_URL}/move/${id}`)
-                    .pipe(tap(this.validate),
-                          map(this.parseData<PokemonMove>),
-                          retry(3))
+                    .pipe(map(this.parseData<PokemonMove>),
+                          retry(this.MAX_RETRY_COUNT))
                     .toPromise();
   }
 
@@ -34,37 +33,51 @@ export class PokeapiService implements PokemonService {
     return Math.floor(Math.random() * ceiling + 1);
   }
 
-  getRandomPokemon(): Promise<Pokemon> {
-    return defer(() => this.http.get<PokemonMove>(`${this.API_URL}/pokemon/${this.getRandomNumber(898)}`))
-                                .pipe(tap(this.validate),
-                                      map(this.parseData<Pokemon>),
-                                      retry(3))
-                                .toPromise();
+  getRandomPokemon(): Observable<Pokemon> {
+    return this.http.get<Pokemon>(`${this.API_URL}/pokemon/${this.getRandomNumber(898)}`)
+                                .pipe(map(this.parseData<Pokemon>),
+                                      retry(this.MAX_RETRY_COUNT));
   }
 
-  getRandomMove(): Promise<PokemonMove> {
-    return defer(() => this.http.get<PokemonMove>(`${this.API_URL}/move/${this.getRandomNumber(826)}`))
-                                .pipe(tap(this.validate),
-                                      map(this.parseData<PokemonMove>),
-                                      retry(3))
-                                .toPromise();
+  getRandomMove(): Observable<PokemonMove> {
+    return this.http.get<PokemonMove>(`${this.API_URL}/move/${this.getRandomNumber(826)}`)
+                                .pipe(map(this.parseData<PokemonMove>),
+                                      retry(this.MAX_RETRY_COUNT));
   }
 
-  private parseData<T>(data: any): T {
+  getMatchup(): Observable<any> {
+    const move = this.getRandomMove();
+    const attacking = this.getRandomPokemon();
+    const defending = this.getRandomPokemon();
+
+    return zip(move, attacking, defending);
+  }
+
+  parseData<T>(data: any): T {
     return <T> data;
   }
 
-  private validate(data: {[key: string]: any}): void {
-    if (data.hasOwnProperty('sprites') && (!data.sprites.front_default || !data.sprites.back_default)) {
-      throw new Error(`pokémon without sprite(s): ${data.name}`);
+  public validate(matchup: Matchup): void {
+    if (!matchup.move.power) {
+      console.log(`move without power: ${matchup.move.name}`);
+      throw new Error(`move without power: ${matchup.move.name}`);
     }
 
-    if (data.hasOwnProperty('learned_by_pokemon') && data.learned_by_pokemon.length === 0) {
-      throw new Error(`move not learned by any pokémon: ${data.name}`);
+    if (matchup.move.learned_by_pokemon.length === 0) {
+      console.log(`move not learned by any pokémon: ${matchup.move.name}`);
+      throw new Error(`move not learned by any pokémon: ${matchup.move.name}`);
     }
 
-    if (data.hasOwnProperty('power') && !data.power) {
-      throw new Error(`move without power: ${data.name}`);
+    const moveLearnedByAttacking = matchup.move.learned_by_pokemon.find(pkmn => pkmn.name === matchup.attacking.name);
+    if (!moveLearnedByAttacking) {
+      console.log(`move not learned by attacking pokémon: ${matchup.move.name}`);
+      throw new Error(`move not learned by attacking pokémon: ${matchup.move.name}`);
+    }
+
+    if ((!matchup.attacking.sprites.front_default || !matchup.attacking.sprites.back_default) ||
+        (!matchup.defending.sprites.front_default || !matchup.defending.sprites.back_default)) {
+      console.log(`pokémon without sprite(s): ${matchup}`);
+      throw new Error(`pokémon without sprite(s): ${matchup}`);
     }
   }
 }

@@ -16,6 +16,12 @@ export interface PokemonMove {
   names: {name: string, language: {name: string, url: string}}[];
 }
 
+export interface Matchup {
+  move: PokemonMove;
+  attacking: Pokemon;
+  defending: Pokemon;
+}
+
 export interface Sprite {
   back_default: string;
   back_shiny: string;
