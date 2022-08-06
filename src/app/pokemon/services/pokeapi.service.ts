@@ -3,32 +3,27 @@ import { Injectable } from '@angular/core';
 import { defer } from 'rxjs';
 import { map, retry, tap } from 'rxjs/operators';
 import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
-import { PokemonService } from './pokemonservice';
+import { PokemonService } from './pokemon.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokeapiService implements PokemonService {
 
+  readonly API_URL: string = "https://pokeapi.co/api/v2"
+
   constructor(private http: HttpClient) { }
 
   getPokemon(id: number | string): Promise<Pokemon> {
-    return this.http.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    return this.http.get<Pokemon>(`${this.API_URL}/pokemon/${id}`)
                     .pipe(tap(this.validate),
                           map(this.parseData<Pokemon>),
                           retry(3))
                     .toPromise();
   }
 
-  getType(id: number | string): Promise<PokemonType> {
-    return this.http.get<PokemonType>(`https://pokeapi.co/api/v2/type/${id}`)
-                    .pipe(map(this.parseData<PokemonType>),
-                          retry(3))
-                    .toPromise();
-  }
-
   getMove(id: number | string): Promise<PokemonMove> {
-    return this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${id}`)
+    return this.http.get<PokemonMove>(`${this.API_URL}/move/${id}`)
                     .pipe(tap(this.validate),
                           map(this.parseData<PokemonMove>),
                           retry(3))
@@ -40,19 +35,15 @@ export class PokeapiService implements PokemonService {
   }
 
   getRandomPokemon(): Promise<Pokemon> {
-    return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/pokemon/${this.getRandomNumber(898)}`))
+    return defer(() => this.http.get<PokemonMove>(`${this.API_URL}/pokemon/${this.getRandomNumber(898)}`))
                                 .pipe(tap(this.validate),
                                       map(this.parseData<Pokemon>),
                                       retry(3))
                                 .toPromise();
   }
 
-  getRandomType(): Promise<PokemonType> {
-    return this.getType(this.getRandomNumber(18));
-  }
-
   getRandomMove(): Promise<PokemonMove> {
-    return defer(() => this.http.get<PokemonMove>(`https://pokeapi.co/api/v2/move/${this.getRandomNumber(826)}`))
+    return defer(() => this.http.get<PokemonMove>(`${this.API_URL}/move/${this.getRandomNumber(826)}`))
                                 .pipe(tap(this.validate),
                                       map(this.parseData<PokemonMove>),
                                       retry(3))
