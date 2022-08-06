@@ -11,7 +11,7 @@ import { PokemonComponent } from './pokemon/pokemon.component';
 import { RoundscoreComponent } from './score/roundscore/roundscore.component';
 import { HighscoreComponent } from './score/highscore/highscore.component';
 import { PokemonmoveComponent } from './pokemon/pokemonmove/pokemonmove.component';
-import { CachingInterceptor } from './Interceptors/caching.interceptor';
+import { CachingInterceptor } from './cache/Interceptors/caching.interceptor';
 
 @NgModule({
   declarations: [
