@@ -1,4 +1,4 @@
-import { Pokemon, PokemonMove, PokemonType } from '../pokemon';
+import { Pokemon, PokemonMove } from '../pokemon';
 
 export abstract class PokemonService {
 

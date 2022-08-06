@@ -7,11 +7,6 @@ export interface Pokemon {
   types: {slot: number, type: {name: string, url: string}}[];
 }
 
-export interface PokemonType {
-  id: number;
-  name: string;
-}
-
 export interface PokemonMove {
   id: number;
   name: string;

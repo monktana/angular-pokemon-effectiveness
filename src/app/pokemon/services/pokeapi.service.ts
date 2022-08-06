@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { defer } from 'rxjs';
 import { map, retry, tap } from 'rxjs/operators';
-import { Pokemon, PokemonType, PokemonMove } from '../pokemon';
+import { Pokemon, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemon.service';
 
 @Injectable({
