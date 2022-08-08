@@ -36,12 +36,7 @@ export class MainComponent implements OnInit {
   }
 
   private getMatchup(): Promise<Matchup> {
-    return defer(() => this.pokemonService.getMatchup())
-                                          .pipe(
-                                              map((value: any) => <Matchup>{move: value[0], attacking: value[1], defending: value[2]}),
-                                              tap(this.pokemonService.validate),
-                                              retry(50)
-                                            ).toPromise()
+    return defer(() => this.pokemonService.getMatchup()).pipe(retry(10)).toPromise()
   }
 
   public fight(guess: TypeEffectiveness): void {
