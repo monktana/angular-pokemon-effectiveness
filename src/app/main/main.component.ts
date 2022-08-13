@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon, TypeEffectiveness, attack, PokemonMove } from '../pokemon/pokemon';
+import { defer } from 'rxjs';
+import { map, retry, tap } from 'rxjs/operators';
+import { TypeEffectiveness, attack, Matchup } from '../pokemon/pokemon';
 import { PokeapiService } from '../pokemon/services/pokeapi.service';
 import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
 import { TemporaryScoreService } from '../score/services/temporary-score.service';
@@ -10,8 +12,8 @@ import { TemporaryScoreService } from '../score/services/temporary-score.service
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  currentRound!: {move: PokemonMove, attacking: Pokemon, defending: Pokemon}
-  nextRound!: {move: PokemonMove, attacking: Pokemon, defending: Pokemon}
+  currentMatchup: Matchup | undefined;
+  nextMatchup: Matchup | undefined;
 
   score!: number;
 
@@ -21,33 +23,27 @@ export class MainComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.currentRound = await this.loadRound();
+      this.currentMatchup = await this.getMatchup();
     } catch (error) {
       console.log({msg: 'error loading round', error});
     }
     
     try {
-      this.nextRound = await this.loadRound();
+      this.nextMatchup = await this.getMatchup();
     } catch (error) {
       console.log({msg: 'error loading round', error});
     }
   }
 
-  private async loadRound(): Promise<any> {
-    const move = await this.pokemonService.getRandomMove();
-    const movePokemon = move.learned_by_pokemon[Math.floor(Math.random() * move.learned_by_pokemon.length)].name;
-    const attacking = await this.pokemonService.getPokemon(movePokemon);
-
-    const defending = await this.pokemonService.getRandomPokemon();
-
-    return {move, attacking, defending};
+  private getMatchup(): Promise<Matchup> {
+    return defer(() => this.pokemonService.getMatchup()).pipe(retry(10)).toPromise()
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.currentRound.move.type.name, this.currentRound.defending);
+    const effectiveness = attack(this.currentMatchup!.move.type.name, this.currentMatchup!.defending);
     if (guess === effectiveness) {
-      this.currentRound = this.nextRound;
-      this.loadRound().then((round) => this.nextRound = round).catch((reason) => console.log({msg: 'error loading round', reason}));
+      this.currentMatchup = this.nextMatchup;
+      this.getMatchup().then((matchup) => this.nextMatchup = matchup).catch((reason) => console.log({msg: 'error loading round', reason}));
 
       this.temporaryScoreService.increase(1);
       return;

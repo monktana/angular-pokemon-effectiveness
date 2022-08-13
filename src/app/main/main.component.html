@@ -2,8 +2,8 @@
   <app-roundscore></app-roundscore>
   <app-highscore></app-highscore>
   <div class="gameboard">
-    <app-pokemon [pokemon]="currentRound.defending" *ngIf="currentRound"></app-pokemon>
-    <app-pokemon [pokemon]="currentRound.attacking" [attacking]="true" *ngIf="currentRound"></app-pokemon>
-    <app-pokemonmove [move]="currentRound.move" [pokemon]="currentRound.attacking" (fight)="fight($event)" *ngIf="currentRound"></app-pokemonmove>
+    <app-pokemon [pokemon]="currentMatchup.defending" *ngIf="currentMatchup"></app-pokemon>
+    <app-pokemon [pokemon]="currentMatchup.attacking" [attacking]="true" *ngIf="currentMatchup"></app-pokemon>
+    <app-pokemonmove [move]="currentMatchup.move" [pokemon]="currentMatchup.attacking" (fight)="fight($event)" *ngIf="currentMatchup"></app-pokemonmove>
   </div>
 </div>

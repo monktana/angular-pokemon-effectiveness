@@ -7,11 +7,6 @@ export interface Pokemon {
   types: {slot: number, type: {name: string, url: string}}[];
 }
 
-export interface PokemonType {
-  id: number;
-  name: string;
-}
-
 export interface PokemonMove {
   id: number;
   name: string;
@@ -19,6 +14,12 @@ export interface PokemonMove {
   type: {name: string, url: string};
   learned_by_pokemon: {name: string, url: string}[];
   names: {name: string, language: {name: string, url: string}}[];
+}
+
+export interface Matchup {
+  move: PokemonMove;
+  attacking: Pokemon;
+  defending: Pokemon;
 }
 
 export interface Sprite {
