@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
-import { concatMap, map, tap } from 'rxjs/operators';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { Matchup, Pokemon, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemon.service';
 
@@ -16,16 +16,12 @@ export class PokeapiService implements PokemonService {
 
   getPokemon(id: number | string): Observable<Pokemon> {
     return this.http.get<Pokemon>(`${this.API_URL}/pokemon/${id}`)
-                    .pipe(tap(this.validatePokemon));
+                    .pipe(catchError(this.handleError('getPokemon'))) as Observable<Pokemon>;;
   }
 
   getMove(id: number | string): Observable<PokemonMove> {
     return this.http.get<PokemonMove>(`${this.API_URL}/move/${id}`)
                     .pipe(tap(this.validateMove), map(this.filterMovePokemon));
-  }
-
-  getRandomNumber(ceiling: number): number {
-    return Math.floor(Math.random() * ceiling + 1);
   }
 
   getRandomPokemon(): Observable<Pokemon> {
@@ -36,6 +32,10 @@ export class PokeapiService implements PokemonService {
   getRandomMove(): Observable<PokemonMove> {
     return this.http.get<PokemonMove>(`${this.API_URL}/move/${this.getRandomNumber(826)}`)
                     .pipe(tap(this.validateMove), map(this.filterMovePokemon));
+  }
+
+  private getRandomNumber(ceiling: number): number {
+    return Math.floor(Math.random() * ceiling + 1);
   }
 
   getMatchup(): Observable<Matchup> {
@@ -61,20 +61,32 @@ export class PokeapiService implements PokemonService {
 
   private validateMove(move: PokemonMove): void {
     if (!move.power) {
-      console.log(`move without power: ${move.name}`);
       throw new Error(`move without power: ${move.name}`);
     }
 
     if (move.learned_by_pokemon.length === 0) {
-      console.log(`move not learned by any pokémon: ${move.name}`);
       throw new Error(`move not learned by any pokémon: ${move.name}`);
     }
   }
 
   private validatePokemon(pokemon: Pokemon): void {
     if ((!pokemon.sprites.front_default || !pokemon.sprites.back_default)) {
-      console.log(`pokémon without sprite(s): ${pokemon.name}`);
       throw new Error(`pokémon without sprite(s): ${pokemon.name}`);
     }
+  }
+
+  private handleError<T>(operation = 'operation') {
+    return (error: HttpErrorResponse): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+
+      if (error.error instanceof Event) {
+        throw error.error;
+      }
+
+      const message = `server returned code ${error.status} with body "${error.error}"`;
+      throw new Error(`${operation} failed: ${message}`);
+    };
+
   }
 }
