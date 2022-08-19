@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { defer } from "rxjs";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { Pokemon, PokemonMove, Sprite } from "../pokemon";
 import { PokeapiService } from "./pokeapi.service";
 
@@ -132,7 +132,7 @@ fdescribe('PokeApiService', () => {
         });
     })
 
-    fdescribe('getMove', () => {
+    describe('getMove', () => {
         it('should return a move', (done: DoneFn) => {
             const tackle: PokemonMove = {
                 id: 33,
@@ -317,6 +317,51 @@ fdescribe('PokeApiService', () => {
                     expect(error.message).toContain('move not learned by any pokémon');
                     done()
                 }
+            });
+        });
+
+        it('is able to filter unwanted pokémon (id >= 10000) from move data', (done: DoneFn) => {
+            const tackle: PokemonMove = {
+                id: 33,
+                name: 'tackle',
+                power: 40,
+                type: { name: "normal", url: "https://pokeapi.co/api/v2/type/1/" },
+                learned_by_pokemon: [
+                    {
+                        "name": "bulbasaur",
+                        "url": "https://pokeapi.co/api/v2/pokemon/1/"
+                    },
+                    {
+                        "name": "ivysaur",
+                        "url": "https://pokeapi.co/api/v2/pokemon/2/"
+                    },
+                    {
+                        "name": "venusaur",
+                        "url": "https://pokeapi.co/api/v2/pokemon/3/"
+                    },
+                    {
+                        "name": "calyrex-ice",
+                        "url": "https://pokeapi.co/api/v2/pokemon/10000/"
+                    },
+                    {
+                        "name": "calyrex-shadow",
+                        "url": "https://pokeapi.co/api/v2/pokemon/10194/"
+                    }
+                ],
+                names: []
+            };
+
+            httpClientSpy.get.and.returnValue(asyncData<PokemonMove>(tackle));
+
+            pokeapiservice.getMove(33).pipe(map(pokeapiservice.filterMovePokemon)).subscribe({
+                next: move => {
+                    expect(move.learned_by_pokemon.length)
+                        .withContext('move has less pokémon')
+                        .toBeLessThan(tackle.learned_by_pokemon.length);
+                    expect(move.learned_by_pokemon.length).toBe(3);
+                    done();
+                },
+                error: done.fail
             });
         });
     })

@@ -52,7 +52,7 @@ export class PokeapiService implements PokemonService {
     return forkJoin({move, attacking, defending});
   }
 
-  private filterMovePokemon(move: PokemonMove): PokemonMove {
+  filterMovePokemon(move: PokemonMove): PokemonMove {
     const clone = {...move};
     clone.learned_by_pokemon = clone.learned_by_pokemon.filter((pkmn) => pkmn.url.search(/(1\d{4})(?=\/$)/g) === -1);
 
