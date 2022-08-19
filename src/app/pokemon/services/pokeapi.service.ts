@@ -16,22 +16,22 @@ export class PokeapiService implements PokemonService {
 
   getPokemon(id: number | string): Observable<Pokemon> {
     return this.http.get<Pokemon>(`${this.API_URL}/pokemon/${id}`)
-                    .pipe(catchError(this.handleError('getPokemon'))) as Observable<Pokemon>;;
+                    .pipe(catchError(this.handleError('getPokemon'))) as Observable<Pokemon>;
   }
 
   getMove(id: number | string): Observable<PokemonMove> {
     return this.http.get<PokemonMove>(`${this.API_URL}/move/${id}`)
-                    .pipe(tap(this.validateMove), map(this.filterMovePokemon));
+                    .pipe(catchError(this.handleError('getMove'))) as Observable<PokemonMove>;
   }
 
   getRandomPokemon(): Observable<Pokemon> {
     return this.http.get<Pokemon>(`${this.API_URL}/pokemon/${this.getRandomNumber(898)}`)
-                    .pipe(tap(this.validatePokemon));
+                    .pipe(catchError(this.handleError('getPokemon'))) as Observable<Pokemon>;
   }
 
   getRandomMove(): Observable<PokemonMove> {
     return this.http.get<PokemonMove>(`${this.API_URL}/move/${this.getRandomNumber(826)}`)
-                    .pipe(tap(this.validateMove), map(this.filterMovePokemon));
+                    .pipe(catchError(this.handleError('getMove'))) as Observable<PokemonMove>;
   }
 
   private getRandomNumber(ceiling: number): number {
@@ -39,15 +39,15 @@ export class PokeapiService implements PokemonService {
   }
 
   getMatchup(): Observable<Matchup> {
-    const move = this.getRandomMove()
+    const move = this.getRandomMove().pipe(tap(this.validateMove), map(this.filterMovePokemon))
     const attacking = move.pipe(
       concatMap((move) => {
         const learnedBy = move.learned_by_pokemon[Math.floor(Math.random() * move.learned_by_pokemon.length)];
-        return this.http.get<Pokemon>(learnedBy.url)
+        return this.http.get<Pokemon>(learnedBy.url).pipe(tap(this.validatePokemon));
       })
     )
 
-    const defending = this.getRandomPokemon()
+    const defending = this.getRandomPokemon().pipe(tap(this.validatePokemon))
 
     return forkJoin({move, attacking, defending});
   }
@@ -59,7 +59,7 @@ export class PokeapiService implements PokemonService {
     return clone;
   }
 
-  private validateMove(move: PokemonMove): void {
+  validateMove(move: PokemonMove): void {
     if (!move.power) {
       throw new Error(`move without power: ${move.name}`);
     }
