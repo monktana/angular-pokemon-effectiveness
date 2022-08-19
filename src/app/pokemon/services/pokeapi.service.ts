@@ -69,7 +69,7 @@ export class PokeapiService implements PokemonService {
     }
   }
 
-  private validatePokemon(pokemon: Pokemon): void {
+  validatePokemon(pokemon: Pokemon): void {
     if ((!pokemon.sprites.front_default || !pokemon.sprites.back_default)) {
       throw new Error(`pokémon without sprite(s): ${pokemon.name}`);
     }
