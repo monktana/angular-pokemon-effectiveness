@@ -77,15 +77,15 @@ export class PokeapiService implements PokemonService {
 
   private handleError<T>(operation = 'operation') {
     return (error: HttpErrorResponse): Observable<T> => {
-
+      throw error;
       // TODO: send the error to remote logging infrastructure
 
-      if (error.error instanceof Event) {
-        throw error.error;
-      }
+      // if (error.error instanceof Event) {
+      //   throw error.error;
+      // }
 
-      const message = `server returned code ${error.status} with body "${error.error}"`;
-      throw new Error(`${operation} failed: ${message}`);
+      // const message = `server returned code ${error.status} with body "${error.error}"`;
+      // throw new Error(`${operation} failed: ${message}`);
     };
 
   }
