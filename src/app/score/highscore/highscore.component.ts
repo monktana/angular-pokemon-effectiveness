@@ -4,10 +4,8 @@ import { LocalStorageScoreService } from '../services/local-storage-score.servic
 @Component({
   selector: 'app-highscore',
   templateUrl: './highscore.component.html',
-  styleUrls: ['./highscore.component.scss']
+  styleUrls: ['./highscore.component.scss'],
 })
 export class HighscoreComponent {
-
-  constructor(public localStorageService: LocalStorageScoreService) { }
-
+  constructor(public localStorageService: LocalStorageScoreService) {}
 }

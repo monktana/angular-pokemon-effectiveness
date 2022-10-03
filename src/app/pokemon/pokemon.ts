@@ -4,16 +4,16 @@ export interface Pokemon {
   id: number;
   name: string;
   sprites: Sprite;
-  types: {slot: number, type: {name: string, url: string}}[];
+  types: { slot: number; type: { name: string; url: string } }[];
 }
 
 export interface PokemonMove {
   id: number;
   name: string;
   power: number | null;
-  type: {name: string, url: string};
-  learned_by_pokemon: {name: string, url: string}[];
-  names: {name: string, language: {name: string, url: string}}[];
+  type: { name: string; url: string };
+  learned_by_pokemon: { name: string; url: string }[];
+  names: { name: string; language: { name: string; url: string } }[];
 }
 
 export interface Matchup {
@@ -33,7 +33,7 @@ export enum TypeEffectiveness {
   NoEffect,
   NotVeryEffective,
   Effective,
-  SuperEffective
+  SuperEffective,
 }
 
 export function attack(attacking: string, target: Pokemon): TypeEffectiveness {

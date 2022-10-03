@@ -4,16 +4,15 @@ import { Pokemon, PokemonMove, TypeEffectiveness } from '../pokemon';
 @Component({
   selector: 'app-pokemonmove',
   templateUrl: './pokemonmove.component.html',
-  styleUrls: ['./pokemonmove.component.scss']
+  styleUrls: ['./pokemonmove.component.scss'],
 })
 export class PokemonmoveComponent {
-
   @Input() pokemon: Pokemon | undefined;
   @Input() move: PokemonMove | undefined;
 
   @Output() fight = new EventEmitter<TypeEffectiveness>();
-  
-  constructor() { }
+
+  constructor() {}
 
   guessEffectiveness(guess: TypeEffectiveness) {
     this.fight.emit(guess);

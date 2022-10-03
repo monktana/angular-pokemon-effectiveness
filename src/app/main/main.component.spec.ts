@@ -12,8 +12,8 @@ describe('MainComponent', () => {
     pokeApiServiceStub = {};
 
     TestBed.configureTestingModule({
-      declarations: [ MainComponent ],
-      providers: [ {provide: PokeapiService, useValue: pokeApiServiceStub} ]
+      declarations: [MainComponent],
+      providers: [{ provide: PokeapiService, useValue: pokeApiServiceStub }],
     });
     fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;

@@ -8,9 +8,8 @@ describe('RoundscoreComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RoundscoreComponent ]
-    })
-    .compileComponents();
+      declarations: [RoundscoreComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

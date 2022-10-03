@@ -20,16 +20,12 @@ import { CachingInterceptor } from './cache/Interceptors/caching.interceptor';
     PokemonComponent,
     RoundscoreComponent,
     HighscoreComponent,
-    PokemonmoveComponent
+    PokemonmoveComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,5 @@
-@import "../shared/variables";
-@import "../shared/functions";
+@import '../shared/variables';
+@import '../shared/functions';
 
 .pokemon-container {
   width: 100%;
@@ -34,7 +34,7 @@
 
     background-color: transparent;
     // color: $body-color;
-    
+
     font-size: $font-size-base;
     font-weight: $font-weight-normal;
 

@@ -6,7 +6,7 @@ const sprite: Sprite = {
   back_default: '',
   back_shiny: '',
   front_default: '',
-  front_shiny: ''
+  front_shiny: '',
 };
 
 describe('pokémon matchups', () => {
@@ -15,21 +15,21 @@ describe('pokémon matchups', () => {
       id: 1,
       name: 'bulbasaur',
       sprites: sprite,
-      types: [{slot: 0, type: {name:'grass', url: ''}}]
+      types: [{ slot: 0, type: { name: 'grass', url: '' } }],
     };
 
     const charmander: Pokemon = {
       id: 4,
       name: 'charmander',
       sprites: sprite,
-      types: [{slot: 0, type: {name:'fire', url: ''}}]
+      types: [{ slot: 0, type: { name: 'fire', url: '' } }],
     };
 
     const rattata: Pokemon = {
       id: 19,
       name: 'rattata',
       sprites: sprite,
-      types: [{slot: 0, type: {name:'normal', url: ''}}]
+      types: [{ slot: 0, type: { name: 'normal', url: '' } }],
     };
 
     it('has no effect', () => {
@@ -37,7 +37,9 @@ describe('pokémon matchups', () => {
     });
 
     it('is not effective', () => {
-      expect(attack('water', bulbasaur)).toBe(TypeEffectiveness.NotVeryEffective);
+      expect(attack('water', bulbasaur)).toBe(
+        TypeEffectiveness.NotVeryEffective
+      );
     });
 
     it('is effective', () => {
@@ -45,7 +47,9 @@ describe('pokémon matchups', () => {
     });
 
     it('is very effective', () => {
-      expect(attack('water', charmander)).toBe(TypeEffectiveness.SuperEffective);
+      expect(attack('water', charmander)).toBe(
+        TypeEffectiveness.SuperEffective
+      );
     });
   });
 
@@ -54,21 +58,30 @@ describe('pokémon matchups', () => {
       id: 3,
       name: 'venusaur',
       sprites: sprite,
-      types: [{slot: 0, type: {name:'grass', url: ''}}, {slot: 1, type: {name:'poison', url: ''}}]
+      types: [
+        { slot: 0, type: { name: 'grass', url: '' } },
+        { slot: 1, type: { name: 'poison', url: '' } },
+      ],
     };
 
     const charizard: Pokemon = {
       id: 6,
       name: 'charizard',
       sprites: sprite,
-      types: [{slot: 0, type: {name:'fire', url: ''}}, {slot: 1, type: {name:'flying', url: ''}}]
+      types: [
+        { slot: 0, type: { name: 'fire', url: '' } },
+        { slot: 1, type: { name: 'flying', url: '' } },
+      ],
     };
 
     const gengar: Pokemon = {
       id: 94,
       name: 'gengar',
       sprites: sprite,
-      types: [{slot: 0, type: {name:'ghost', url: ''}}, {slot: 1, type: {name:'poison', url: ''}}]
+      types: [
+        { slot: 0, type: { name: 'ghost', url: '' } },
+        { slot: 1, type: { name: 'poison', url: '' } },
+      ],
     };
 
     it('has no effect', () => {
@@ -99,11 +112,10 @@ describe('pokémon matchups', () => {
 
 describe('type matrix', () => {
   Object.keys(typeMatchups).forEach(type => {
-    pokemonFixture.forEach((pokemon) => {
-
+    pokemonFixture.forEach(pokemon => {
       it(`attacks ${pokemon.name} with ${type}`, () => {
         let multiplier = 1;
-        pokemon.types.forEach((defendingType) => {
+        pokemon.types.forEach(defendingType => {
           multiplier *= typeMatchups[type][defendingType.type.name];
         });
 
@@ -121,7 +133,7 @@ describe('type matrix', () => {
         }
 
         expect(attack(type, pokemon)).toBe(effectiveness);
-      })
-    })
+      });
+    });
   });
 });

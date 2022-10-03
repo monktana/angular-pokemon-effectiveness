@@ -4,25 +4,24 @@ import { Pokemon } from './pokemon';
 @Component({
   selector: 'app-pokemon',
   templateUrl: './pokemon.component.html',
-  styleUrls: ['./pokemon.component.scss']
+  styleUrls: ['./pokemon.component.scss'],
 })
 export class PokemonComponent implements OnChanges {
-
   @Input() pokemon: Pokemon | undefined;
   @Input() attacking: boolean = false;
 
   public spriteUrl: string = '';
   private isShiny: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.spriteUrl = this.determineSprite();
-    this.isShiny = (Math.round((Math.random() * 512)) === 206);
+    this.isShiny = Math.round(Math.random() * 512) === 206;
   }
 
   private determineSprite(): string {
-    if(!this.pokemon) {
+    if (!this.pokemon) {
       return '';
     }
 

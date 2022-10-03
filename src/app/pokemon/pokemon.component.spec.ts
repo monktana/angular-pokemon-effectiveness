@@ -8,7 +8,7 @@ describe('PokemonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PokemonComponent ]
+      declarations: [PokemonComponent],
     });
     fixture = TestBed.createComponent(PokemonComponent);
     component = fixture.componentInstance;

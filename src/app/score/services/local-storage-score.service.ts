@@ -3,10 +3,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { PersistentScoreService } from './persistent-score-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageScoreService implements PersistentScoreService {
-
   private score: BehaviorSubject<number>;
 
   constructor() {
