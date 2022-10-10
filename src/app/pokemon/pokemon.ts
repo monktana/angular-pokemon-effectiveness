@@ -5,6 +5,7 @@ export interface Pokemon {
   name: string;
   sprites: Sprite;
   types: { slot: number; type: { name: string; url: string } }[];
+  moves: { move: { name: string; url: string } }[];
 }
 
 export interface PokemonMove {

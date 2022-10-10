@@ -6,8 +6,6 @@ export abstract class PokemonService {
 
   abstract getMove(id: number): Observable<PokemonMove>;
 
-  abstract getMatchup(): Observable<Matchup>;
-
   abstract getRandomPokemon(): Observable<Pokemon>;
 
   abstract getRandomMove(): Observable<PokemonMove>;

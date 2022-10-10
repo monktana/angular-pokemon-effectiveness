@@ -37,10 +37,14 @@ export class MainComponent implements OnInit {
     }
   }
 
-  private getMatchup(): Promise<Matchup> {
-    return defer(() => this.pokemonService.getMatchup())
-      .pipe(retry(10))
+  private async getMatchup(): Promise<Matchup> {
+    const attacking = await this.pokemonService.getAttackingPokemon();
+    const defending = await this.pokemonService
+      .getRandomPokemon()
+      .pipe(tap(this.pokemonService.validatePokemon))
       .toPromise();
+
+    return { attacking: attacking.pokemon, move: attacking.move, defending };
   }
 
   public fight(guess: TypeEffectiveness): void {

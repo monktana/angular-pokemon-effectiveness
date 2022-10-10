@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
-import { Matchup, Pokemon, PokemonMove } from '../pokemon';
+import { defer, Observable, of } from 'rxjs';
+import { catchError, concatMap, tap, retry } from 'rxjs/operators';
+import { Pokemon, PokemonMove } from '../pokemon';
 import { PokemonService } from './pokemon.service';
 
 @Injectable({
@@ -41,26 +41,26 @@ export class PokeapiService implements PokemonService {
     return Math.floor(Math.random() * ceiling + 1);
   }
 
-  getMatchup(): Observable<Matchup> {
-    const move = this.getRandomMove().pipe(
-      tap(this.validateMove),
-      map(this.filterMovePokemon)
-    );
-    const attacking = move.pipe(
-      concatMap(move => {
-        const learnedBy =
-          move.learned_by_pokemon[
-            Math.floor(Math.random() * move.learned_by_pokemon.length)
-          ];
-        return this.http
-          .get<Pokemon>(learnedBy.url)
-          .pipe(tap(this.validatePokemon));
-      })
-    );
+  async getAttackingPokemon(): Promise<{
+    pokemon: Pokemon;
+    move: PokemonMove;
+  }> {
+    const pokemon = await this.getRandomPokemon()
+      .pipe(tap(this.validatePokemon))
+      .toPromise();
 
-    const defending = this.getRandomPokemon().pipe(tap(this.validatePokemon));
+    const move = await defer(() =>
+      of(pokemon.moves[Math.floor(Math.random() * pokemon.moves.length)])
+    )
+      .pipe(
+        concatMap(move =>
+          this.getMove(move.move.name).pipe(tap(this.validateMove))
+        ),
+        retry(3)
+      )
+      .toPromise();
 
-    return forkJoin({ move, attacking, defending });
+    return { pokemon, move };
   }
 
   filterMovePokemon(move: PokemonMove): PokemonMove {
