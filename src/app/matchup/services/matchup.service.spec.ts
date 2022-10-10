@@ -5,8 +5,8 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { map, tap } from 'rxjs/operators';
-import { Pokemon, PokemonMove, Sprite } from '../pokemon';
-import { PokeapiService } from './pokeapi.service';
+import { Pokemon, Move, Sprite } from '../../pokemon/pokemon';
+import { PokeapiService } from './matchup.service';
 
 describe('PokeApiService', () => {
   let httpClient: HttpClient;
@@ -243,7 +243,7 @@ describe('PokeApiService', () => {
 
   describe('getMove', () => {
     it('should return a move', (done: DoneFn) => {
-      const tackle: PokemonMove = {
+      const tackle: Move = {
         id: 33,
         name: 'tackle',
         power: 40,
@@ -274,7 +274,7 @@ describe('PokeApiService', () => {
       };
 
       pokeapiservice.getMove(33).subscribe({
-        next: (move: PokemonMove) => {
+        next: (move: Move) => {
           expect(move).withContext('expected move').toEqual(tackle);
           done();
         },
@@ -311,7 +311,7 @@ describe('PokeApiService', () => {
     });
 
     it('validates the move data', (done: DoneFn) => {
-      const tackle: PokemonMove = {
+      const tackle: Move = {
         id: 33,
         name: 'tackle',
         power: 40,
@@ -345,7 +345,7 @@ describe('PokeApiService', () => {
         .getMove(33)
         .pipe(tap(pokeapiservice.validateMove))
         .subscribe({
-          next: (move: PokemonMove) => {
+          next: (move: Move) => {
             expect(move).withContext('valid pokémon data').toEqual(tackle);
             done();
           },
@@ -360,7 +360,7 @@ describe('PokeApiService', () => {
     });
 
     it('recieves an error if the move has no power', (done: DoneFn) => {
-      const growl: PokemonMove = {
+      const growl: Move = {
         id: 45,
         name: 'growl',
         power: null,
@@ -401,7 +401,7 @@ describe('PokeApiService', () => {
     });
 
     it('recieves an error if the move is not learned by any pokémon', (done: DoneFn) => {
-      const tackle: PokemonMove = {
+      const tackle: Move = {
         id: 33,
         name: 'tackle',
         power: 40,
@@ -429,7 +429,7 @@ describe('PokeApiService', () => {
     });
 
     it('filters pokémon with an id >= 10000', (done: DoneFn) => {
-      const tackle: PokemonMove = {
+      const tackle: Move = {
         id: 33,
         name: 'tackle',
         power: 40,
@@ -463,7 +463,7 @@ describe('PokeApiService', () => {
         .getMove(33)
         .pipe(map(pokeapiservice.filterMovePokemon))
         .subscribe({
-          next: (move: PokemonMove) => {
+          next: (move: Move) => {
             expect(move.learned_by_pokemon.length)
               .withContext('move has less pokémon')
               .toBeLessThan(tackle.learned_by_pokemon.length);

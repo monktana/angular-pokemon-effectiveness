@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { defer } from 'rxjs';
-import { map, retry, tap } from 'rxjs/operators';
-import { TypeEffectiveness, attack, Matchup } from '../pokemon/pokemon';
-import { PokeapiService } from '../pokemon/services/pokeapi.service';
+import { TypeEffectiveness, Pokemon, Move } from '../pokemon/pokemon';
+import { MatchupService } from '../matchup/services/matchup.service';
 import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
 import { TemporaryScoreService } from '../score/services/temporary-score.service';
+import { Matchup } from '../matchup/matchup';
+import { typeMatchups } from '../pokemon/typematrix';
 
 @Component({
   selector: 'app-main',
@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
   score!: number;
 
   constructor(
-    private pokemonService: PokeapiService,
+    private matchupService: MatchupService,
     private temporaryScoreService: TemporaryScoreService,
     private localStorageService: LocalStorageScoreService
   ) {}
@@ -38,18 +38,12 @@ export class MainComponent implements OnInit {
   }
 
   private async getMatchup(): Promise<Matchup> {
-    const attacking = await this.pokemonService.getAttackingPokemon();
-    const defending = await this.pokemonService
-      .getRandomPokemon()
-      .pipe(tap(this.pokemonService.validatePokemon))
-      .toPromise();
-
-    return { attacking: attacking.pokemon, move: attacking.move, defending };
+    return this.matchupService.getMatchup();
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(
-      this.currentMatchup!.move.type.name,
+    const effectiveness = this.attack(
+      this.currentMatchup!.move,
       this.currentMatchup!.defending
     );
     if (guess === effectiveness) {
@@ -68,5 +62,26 @@ export class MainComponent implements OnInit {
       .unsubscribe();
 
     this.temporaryScoreService.reset();
+  }
+
+  private attack(move: Move, target: Pokemon): TypeEffectiveness {
+    let multiplier = 1;
+
+    target.types.forEach((defendingType: any) => {
+      multiplier *= typeMatchups[move.type.name][defendingType.type.name];
+    });
+
+    switch (true) {
+      case multiplier > 1:
+        return TypeEffectiveness.SuperEffective;
+      case multiplier === 1:
+        return TypeEffectiveness.Effective;
+      case multiplier < 1 && multiplier > 0:
+        return TypeEffectiveness.NotVeryEffective;
+      case multiplier === 0:
+        return TypeEffectiveness.NoEffect;
+      default:
+        throw new Error(`unknown effectiveness: ${multiplier}`);
+    }
   }
 }

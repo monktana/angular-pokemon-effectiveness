@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PokeapiService } from '../pokemon/services/pokeapi.service';
+import { PokeapiService } from '../matchup/services/matchup.service';
 
 import { MainComponent } from './main.component';
 
