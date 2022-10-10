@@ -4,9 +4,8 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { defer } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Matchup, Pokemon, PokemonMove, Sprite } from '../pokemon';
+import { Pokemon, PokemonMove, Sprite } from '../pokemon';
 import { PokeapiService } from './pokeapi.service';
 
 describe('PokeApiService', () => {
@@ -129,8 +128,6 @@ describe('PokeApiService', () => {
         ],
       };
 
-      httpClientSpy.get.and.returnValue(asyncData<Pokemon>(bulbasaur));
-
       pokeapiservice
         .getPokemon(1)
         .pipe(tap(pokeapiservice.validatePokemon))
@@ -180,7 +177,6 @@ describe('PokeApiService', () => {
         ],
       };
 
-      httpClientSpy.get.and.returnValue(asyncData<Pokemon>(bulbasaur));
       pokeapiservice
         .getPokemon(1)
         .pipe(tap(pokeapiservice.validatePokemon))
@@ -226,7 +222,6 @@ describe('PokeApiService', () => {
         ],
       };
 
-      httpClientSpy.get.and.returnValue(asyncData<Pokemon>(bulbasaur));
       pokeapiservice
         .getPokemon(1)
         .pipe(tap(pokeapiservice.validatePokemon))
@@ -278,10 +273,8 @@ describe('PokeApiService', () => {
         names: [],
       };
 
-      httpClientSpy.get.and.returnValue(asyncData<PokemonMove>(tackle));
-
       pokeapiservice.getMove(33).subscribe({
-        next: move => {
+        next: (move: PokemonMove) => {
           expect(move).withContext('expected move').toEqual(tackle);
           done();
         },
@@ -297,8 +290,8 @@ describe('PokeApiService', () => {
 
     it('recieves an error if the request fails', (done: DoneFn) => {
       pokeapiservice.getMove(20000).subscribe({
-        next: move => done.fail('expected an error, not a move'),
-        error: error => {
+        next: () => done.fail('expected an error, not a move'),
+        error: (error: HttpErrorResponse) => {
           expect(error.status).withContext('status').toEqual(404);
           expect(error.error)
             .withContext('message')
@@ -348,13 +341,11 @@ describe('PokeApiService', () => {
         names: [],
       };
 
-      httpClientSpy.get.and.returnValue(asyncData<PokemonMove>(tackle));
-
       pokeapiservice
         .getMove(33)
         .pipe(tap(pokeapiservice.validateMove))
         .subscribe({
-          next: move => {
+          next: (move: PokemonMove) => {
             expect(move).withContext('valid pokémon data').toEqual(tackle);
             done();
           },
@@ -395,8 +386,8 @@ describe('PokeApiService', () => {
         .getMove(45)
         .pipe(tap(pokeapiservice.validateMove))
         .subscribe({
-          next: move => done.fail('expected invalid pokémon data.'),
-          error: error => {
+          next: () => done.fail('expected invalid pokémon data.'),
+          error: (error: HttpErrorResponse) => {
             expect(error.message).toContain('move without power');
             done();
           },
@@ -423,8 +414,8 @@ describe('PokeApiService', () => {
         .getMove(33)
         .pipe(tap(pokeapiservice.validateMove))
         .subscribe({
-          next: pokemon => done.fail('expected invalid pokémon data.'),
-          error: error => {
+          next: () => done.fail('expected invalid pokémon data.'),
+          error: (error: HttpErrorResponse) => {
             expect(error.message).toContain('move not learned by any pokémon');
             done();
           },
@@ -472,7 +463,7 @@ describe('PokeApiService', () => {
         .getMove(33)
         .pipe(map(pokeapiservice.filterMovePokemon))
         .subscribe({
-          next: move => {
+          next: (move: PokemonMove) => {
             expect(move.learned_by_pokemon.length)
               .withContext('move has less pokémon')
               .toBeLessThan(tackle.learned_by_pokemon.length);
@@ -489,95 +480,4 @@ describe('PokeApiService', () => {
       req.flush(tackle);
     });
   });
-
-  xdescribe('getMatchup', () => {
-    it('returns a matchup', (done: DoneFn) => {
-      const tackle: PokemonMove = {
-        id: 33,
-        name: 'tackle',
-        power: 40,
-        type: { name: 'normal', url: 'https://pokeapi.co/api/v2/type/1/' },
-        learned_by_pokemon: [
-          {
-            name: 'bulbasaur',
-            url: 'https://pokeapi.co/api/v2/pokemon/1/',
-          },
-          {
-            name: 'ivysaur',
-            url: 'https://pokeapi.co/api/v2/pokemon/2/',
-          },
-          {
-            name: 'venusaur',
-            url: 'https://pokeapi.co/api/v2/pokemon/3/',
-          },
-        ],
-        names: [],
-      };
-
-      const sprite: Sprite = {
-        back_default:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
-        back_shiny:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png',
-        front_default:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-        front_shiny:
-          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png',
-      };
-
-      const bulbasaur: Pokemon = {
-        id: 1,
-        name: 'bulbasaur',
-        sprites: sprite,
-        types: [
-          {
-            slot: 1,
-            type: { name: 'grass', url: 'https://pokeapi.co/api/v2/type/12/' },
-          },
-          {
-            slot: 2,
-            type: { name: 'poison', url: 'https://pokeapi.co/api/v2/type/4/' },
-          },
-        ],
-      };
-
-      const charmander: Pokemon = {
-        id: 4,
-        name: 'charmander',
-        sprites: sprite,
-        types: [
-          {
-            slot: 1,
-            type: { name: 'fire', url: 'https://pokeapi.co/api/v2/type/10/' },
-          },
-        ],
-      };
-
-      const expected: Matchup = {
-        move: tackle,
-        attacking: bulbasaur,
-        defending: charmander,
-      };
-
-      httpClientSpy.get.and.returnValue(asyncData<Matchup>(expected));
-
-      pokeapiservice.getMatchup().subscribe({
-        next: matchup => {
-          expect(matchup).withContext('expected matchup').toEqual(expected);
-          done();
-        },
-        error: done.fail,
-      });
-
-      expect(httpClientSpy.get.calls.count()).withContext('one call').toBe(3);
-    });
-  });
 });
-
-function asyncData<T>(data: T) {
-  return defer(() => Promise.resolve(data));
-}
-
-function asyncError(errorObject: any) {
-  return defer(() => Promise.reject(errorObject));
-}
