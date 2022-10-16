@@ -1,18 +1,90 @@
 <div class="main-container">
   <app-roundscore></app-roundscore>
   <app-highscore></app-highscore>
-  <div class="gameboard">
-    <app-pokemon
-      [pokemon]="currentMatchup.defending"
-      *ngIf="currentMatchup"></app-pokemon>
-    <app-pokemon
-      [pokemon]="currentMatchup.attacking"
-      [attacking]="true"
-      *ngIf="currentMatchup"></app-pokemon>
-    <app-pokemonmove
-      [move]="currentMatchup.move"
-      [pokemon]="currentMatchup.attacking"
-      (fight)="fight($event)"
-      *ngIf="currentMatchup"></app-pokemonmove>
+  <div class="gameboard" *ngIf="currentMatchup">
+    <div class="pokemon-container">
+      <div class="pokemon-container__wrapper">
+        <div class="pokemon-sprite">
+          <img
+            src="{{ currentMatchup.attacker.sprites.back_default }}"
+            alt="sprite of the attacking pokemon"
+            class="sprite" />
+        </div>
+        <div class="pokemon-name">
+          <p>{{ currentMatchup.attacker.name }}</p>
+        </div>
+        <div class="pokemon-types__wrapper">
+          <div
+            class="pokemon-types__chip pokemon-types__chip-{{ type.type.name }}"
+            *ngFor="let type of currentMatchup.attacker?.types">
+            {{ type.type.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pokemon-container">
+      <div class="pokemon-container__wrapper">
+        <div class="pokemon-sprite">
+          <img
+            src="{{ currentMatchup.defender.sprites.front_default }}"
+            alt="sprite of the defending pokemon"
+            class="sprite" />
+        </div>
+        <div class="pokemon-name">
+          <p>{{ currentMatchup.defender.name }}</p>
+        </div>
+        <div class="pokemon-types__wrapper">
+          <div
+            class="pokemon-types__chip pokemon-types__chip-{{ type.type.name }}"
+            *ngFor="let type of currentMatchup.defender?.types">
+            {{ type.type.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pokemonmove-container">
+      <div class="pokemon-container__wrapper">
+        <div class="combattext-container">
+          <p>
+            <span class="pokemon-name">{{ currentMatchup.attacker.name }}</span>
+            is attacking with
+            <span class="pokemonmove-name">{{
+              currentMatchup.attacker.move.name
+            }}</span>
+            of type
+            <span
+              class="pokemon-types__chip pokemon-types__chip-{{
+                currentMatchup.attacker.move.type.name
+              }}"
+              >{{ currentMatchup.attacker.move.type.name }}</span
+            >
+          </p>
+        </div>
+        <div class="decisions-container">
+          <div class="decisions">
+            <button
+              class="button decisions_button"
+              (click)="fight(TypeEffectiveness.SuperEffective)">
+              Super effective
+            </button>
+            <button
+              class="button decisions_button"
+              (click)="fight(TypeEffectiveness.Effective)">
+              Effective
+            </button>
+            <button
+              class="button decisions_button"
+              (click)="fight(TypeEffectiveness.NotVeryEffective)">
+              Not very effective
+            </button>
+            <button
+              class="button decisions_button"
+              (click)="fight(TypeEffectiveness.NoEffect)">
+              No effect
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

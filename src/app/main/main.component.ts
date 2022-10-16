@@ -43,8 +43,8 @@ export class MainComponent implements OnInit {
 
   public fight(guess: TypeEffectiveness): void {
     const effectiveness = this.attack(
-      this.currentMatchup!.move,
-      this.currentMatchup!.defending
+      this.currentMatchup!.attacker.move,
+      this.currentMatchup!.defender
     );
     if (guess === effectiveness) {
       this.currentMatchup = this.nextMatchup;
@@ -62,6 +62,10 @@ export class MainComponent implements OnInit {
       .unsubscribe();
 
     this.temporaryScoreService.reset();
+  }
+
+  public get TypeEffectiveness(): typeof TypeEffectiveness {
+    return TypeEffectiveness;
   }
 
   private attack(move: Move, target: Pokemon): TypeEffectiveness {
