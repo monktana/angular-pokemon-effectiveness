@@ -1,0 +1,494 @@
+[
+  {
+    "id": 33,
+    "name": "tackle",
+    "power": 40,
+    "names": [
+      {
+        "language": {
+          "name": "ja-Hrkt",
+          "url": "https://pokeapi.co/api/v2/language/1/"
+        },
+        "name": "たいあたり"
+      },
+      {
+        "language": {
+          "name": "ko",
+          "url": "https://pokeapi.co/api/v2/language/3/"
+        },
+        "name": "몸통박치기"
+      },
+      {
+        "language": {
+          "name": "zh-Hant",
+          "url": "https://pokeapi.co/api/v2/language/4/"
+        },
+        "name": "撞擊"
+      },
+      {
+        "language": {
+          "name": "fr",
+          "url": "https://pokeapi.co/api/v2/language/5/"
+        },
+        "name": "Charge"
+      },
+      {
+        "language": {
+          "name": "de",
+          "url": "https://pokeapi.co/api/v2/language/6/"
+        },
+        "name": "Tackle"
+      },
+      {
+        "language": {
+          "name": "es",
+          "url": "https://pokeapi.co/api/v2/language/7/"
+        },
+        "name": "Placaje"
+      },
+      {
+        "language": {
+          "name": "it",
+          "url": "https://pokeapi.co/api/v2/language/8/"
+        },
+        "name": "Azione"
+      },
+      {
+        "language": {
+          "name": "en",
+          "url": "https://pokeapi.co/api/v2/language/9/"
+        },
+        "name": "Tackle"
+      },
+      {
+        "language": {
+          "name": "ja",
+          "url": "https://pokeapi.co/api/v2/language/11/"
+        },
+        "name": "たいあたり"
+      },
+      {
+        "language": {
+          "name": "zh-Hans",
+          "url": "https://pokeapi.co/api/v2/language/12/"
+        },
+        "name": "撞击"
+      }
+    ],
+    "type": {
+      "name": "normal",
+      "url": "https://pokeapi.co/api/v2/type/1/"
+    },
+    "learned_by_pokemon": []
+  },
+  {
+    "id": 45,
+    "name": "growl",
+    "power": null,
+    "names": [
+      {
+        "language": {
+          "name": "ja-Hrkt",
+          "url": "https://pokeapi.co/api/v2/language/1/"
+        },
+        "name": "なきごえ"
+      },
+      {
+        "language": {
+          "name": "ko",
+          "url": "https://pokeapi.co/api/v2/language/3/"
+        },
+        "name": "울음소리"
+      },
+      {
+        "language": {
+          "name": "zh-Hant",
+          "url": "https://pokeapi.co/api/v2/language/4/"
+        },
+        "name": "叫聲"
+      },
+      {
+        "language": {
+          "name": "fr",
+          "url": "https://pokeapi.co/api/v2/language/5/"
+        },
+        "name": "Rugissement"
+      },
+      {
+        "language": {
+          "name": "de",
+          "url": "https://pokeapi.co/api/v2/language/6/"
+        },
+        "name": "Heuler"
+      },
+      {
+        "language": {
+          "name": "es",
+          "url": "https://pokeapi.co/api/v2/language/7/"
+        },
+        "name": "Gruñido"
+      },
+      {
+        "language": {
+          "name": "it",
+          "url": "https://pokeapi.co/api/v2/language/8/"
+        },
+        "name": "Ruggito"
+      },
+      {
+        "language": {
+          "name": "en",
+          "url": "https://pokeapi.co/api/v2/language/9/"
+        },
+        "name": "Growl"
+      },
+      {
+        "language": {
+          "name": "ja",
+          "url": "https://pokeapi.co/api/v2/language/11/"
+        },
+        "name": "なきごえ"
+      },
+      {
+        "language": {
+          "name": "zh-Hans",
+          "url": "https://pokeapi.co/api/v2/language/12/"
+        },
+        "name": "叫声"
+      }
+    ],
+    "type": {
+      "name": "normal",
+      "url": "https://pokeapi.co/api/v2/type/1/"
+    },
+    "learned_by_pokemon": []
+  },
+  {
+    "id": 53,
+    "name": "flamethrower",
+    "power": 90,
+    "names": [
+      {
+        "language": {
+          "name": "ja-Hrkt",
+          "url": "https://pokeapi.co/api/v2/language/1/"
+        },
+        "name": "かえんほうしゃ"
+      },
+      {
+        "language": {
+          "name": "ko",
+          "url": "https://pokeapi.co/api/v2/language/3/"
+        },
+        "name": "화염방사"
+      },
+      {
+        "language": {
+          "name": "zh-Hant",
+          "url": "https://pokeapi.co/api/v2/language/4/"
+        },
+        "name": "噴射火焰"
+      },
+      {
+        "language": {
+          "name": "fr",
+          "url": "https://pokeapi.co/api/v2/language/5/"
+        },
+        "name": "Lance-Flammes"
+      },
+      {
+        "language": {
+          "name": "de",
+          "url": "https://pokeapi.co/api/v2/language/6/"
+        },
+        "name": "Flammenwurf"
+      },
+      {
+        "language": {
+          "name": "es",
+          "url": "https://pokeapi.co/api/v2/language/7/"
+        },
+        "name": "Lanzallamas"
+      },
+      {
+        "language": {
+          "name": "it",
+          "url": "https://pokeapi.co/api/v2/language/8/"
+        },
+        "name": "Lanciafiamme"
+      },
+      {
+        "language": {
+          "name": "en",
+          "url": "https://pokeapi.co/api/v2/language/9/"
+        },
+        "name": "Flamethrower"
+      },
+      {
+        "language": {
+          "name": "ja",
+          "url": "https://pokeapi.co/api/v2/language/11/"
+        },
+        "name": "かえんほうしゃ"
+      },
+      {
+        "language": {
+          "name": "zh-Hans",
+          "url": "https://pokeapi.co/api/v2/language/12/"
+        },
+        "name": "喷射火焰"
+      }
+    ],
+    "type": {
+      "name": "fire",
+      "url": "https://pokeapi.co/api/v2/type/10/"
+    },
+    "learned_by_pokemon": []
+  },
+  {
+    "id": 55,
+    "name": "water-gun",
+    "power": 40,
+    "names": [
+      {
+        "language": {
+          "name": "ja-Hrkt",
+          "url": "https://pokeapi.co/api/v2/language/1/"
+        },
+        "name": "みずでっぽう"
+      },
+      {
+        "language": {
+          "name": "ko",
+          "url": "https://pokeapi.co/api/v2/language/3/"
+        },
+        "name": "물대포"
+      },
+      {
+        "language": {
+          "name": "zh-Hant",
+          "url": "https://pokeapi.co/api/v2/language/4/"
+        },
+        "name": "水槍"
+      },
+      {
+        "language": {
+          "name": "fr",
+          "url": "https://pokeapi.co/api/v2/language/5/"
+        },
+        "name": "Pistolet à O"
+      },
+      {
+        "language": {
+          "name": "de",
+          "url": "https://pokeapi.co/api/v2/language/6/"
+        },
+        "name": "Aquaknarre"
+      },
+      {
+        "language": {
+          "name": "es",
+          "url": "https://pokeapi.co/api/v2/language/7/"
+        },
+        "name": "Pistola Agua"
+      },
+      {
+        "language": {
+          "name": "it",
+          "url": "https://pokeapi.co/api/v2/language/8/"
+        },
+        "name": "Pistolacqua"
+      },
+      {
+        "language": {
+          "name": "en",
+          "url": "https://pokeapi.co/api/v2/language/9/"
+        },
+        "name": "Water Gun"
+      },
+      {
+        "language": {
+          "name": "ja",
+          "url": "https://pokeapi.co/api/v2/language/11/"
+        },
+        "name": "みずでっぽう"
+      },
+      {
+        "language": {
+          "name": "zh-Hans",
+          "url": "https://pokeapi.co/api/v2/language/12/"
+        },
+        "name": "水枪"
+      }
+    ],
+    "type": {
+      "name": "water",
+      "url": "https://pokeapi.co/api/v2/type/11/"
+    },
+    "learned_by_pokemon": []
+  },
+  {
+    "id": 75,
+    "name": "razor-leaf",
+    "power": 55,
+    "names": [
+      {
+        "language": {
+          "name": "ja-Hrkt",
+          "url": "https://pokeapi.co/api/v2/language/1/"
+        },
+        "name": "はっぱカッター"
+      },
+      {
+        "language": {
+          "name": "ko",
+          "url": "https://pokeapi.co/api/v2/language/3/"
+        },
+        "name": "잎날가르기"
+      },
+      {
+        "language": {
+          "name": "zh-Hant",
+          "url": "https://pokeapi.co/api/v2/language/4/"
+        },
+        "name": "飛葉快刀"
+      },
+      {
+        "language": {
+          "name": "fr",
+          "url": "https://pokeapi.co/api/v2/language/5/"
+        },
+        "name": "Tranch’Herbe"
+      },
+      {
+        "language": {
+          "name": "de",
+          "url": "https://pokeapi.co/api/v2/language/6/"
+        },
+        "name": "Rasierblatt"
+      },
+      {
+        "language": {
+          "name": "es",
+          "url": "https://pokeapi.co/api/v2/language/7/"
+        },
+        "name": "Hoja Afilada"
+      },
+      {
+        "language": {
+          "name": "it",
+          "url": "https://pokeapi.co/api/v2/language/8/"
+        },
+        "name": "Foglielama"
+      },
+      {
+        "language": {
+          "name": "en",
+          "url": "https://pokeapi.co/api/v2/language/9/"
+        },
+        "name": "Razor Leaf"
+      },
+      {
+        "language": {
+          "name": "ja",
+          "url": "https://pokeapi.co/api/v2/language/11/"
+        },
+        "name": "はっぱカッター"
+      },
+      {
+        "language": {
+          "name": "zh-Hans",
+          "url": "https://pokeapi.co/api/v2/language/12/"
+        },
+        "name": "飞叶快刀"
+      }
+    ],
+    "type": {
+      "name": "grass",
+      "url": "https://pokeapi.co/api/v2/type/12/"
+    },
+    "learned_by_pokemon": []
+  },
+  {
+    "id": 188,
+    "name": "sludge-bomb",
+    "power": 90,
+    "names": [
+      {
+        "language": {
+          "name": "ja-Hrkt",
+          "url": "https://pokeapi.co/api/v2/language/1/"
+        },
+        "name": "ヘドロばくだん"
+      },
+      {
+        "language": {
+          "name": "ko",
+          "url": "https://pokeapi.co/api/v2/language/3/"
+        },
+        "name": "오물폭탄"
+      },
+      {
+        "language": {
+          "name": "zh-Hant",
+          "url": "https://pokeapi.co/api/v2/language/4/"
+        },
+        "name": "污泥炸彈"
+      },
+      {
+        "language": {
+          "name": "fr",
+          "url": "https://pokeapi.co/api/v2/language/5/"
+        },
+        "name": "Bombe Beurk"
+      },
+      {
+        "language": {
+          "name": "de",
+          "url": "https://pokeapi.co/api/v2/language/6/"
+        },
+        "name": "Matschbombe"
+      },
+      {
+        "language": {
+          "name": "es",
+          "url": "https://pokeapi.co/api/v2/language/7/"
+        },
+        "name": "Bomba Lodo"
+      },
+      {
+        "language": {
+          "name": "it",
+          "url": "https://pokeapi.co/api/v2/language/8/"
+        },
+        "name": "Fangobomba"
+      },
+      {
+        "language": {
+          "name": "en",
+          "url": "https://pokeapi.co/api/v2/language/9/"
+        },
+        "name": "Sludge Bomb"
+      },
+      {
+        "language": {
+          "name": "ja",
+          "url": "https://pokeapi.co/api/v2/language/11/"
+        },
+        "name": "ヘドロばくだん"
+      },
+      {
+        "language": {
+          "name": "zh-Hans",
+          "url": "https://pokeapi.co/api/v2/language/12/"
+        },
+        "name": "污泥炸弹"
+      }
+    ],
+    "type": {
+      "name": "poison",
+      "url": "https://pokeapi.co/api/v2/type/4/"
+    },
+    "learned_by_pokemon": []
+  }
+]

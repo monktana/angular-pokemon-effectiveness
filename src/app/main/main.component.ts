@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TypeEffectiveness, Pokemon, Move } from '../pokemon/pokemon';
+import { TypeEffectiveness, attack } from '../pokemon/pokemon';
 import { MatchupService } from '../matchup/services/matchup.service';
 import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
 import { TemporaryScoreService } from '../score/services/temporary-score.service';
 import { Matchup } from '../matchup/matchup';
-import { typeMatchups } from '../pokemon/typematrix';
 
 @Component({
   selector: 'app-main',
@@ -42,10 +41,11 @@ export class MainComponent implements OnInit {
   }
 
   public fight(guess: TypeEffectiveness): void {
-    const effectiveness = this.attack(
+    const effectiveness = attack(
       this.currentMatchup!.attacker.move,
       this.currentMatchup!.defender
     );
+
     if (guess === effectiveness) {
       this.currentMatchup = this.nextMatchup;
       this.getMatchup()
@@ -66,26 +66,5 @@ export class MainComponent implements OnInit {
 
   public get TypeEffectiveness(): typeof TypeEffectiveness {
     return TypeEffectiveness;
-  }
-
-  private attack(move: Move, target: Pokemon): TypeEffectiveness {
-    let multiplier = 1;
-
-    target.types.forEach((defendingType: any) => {
-      multiplier *= typeMatchups[move.type.name][defendingType.type.name];
-    });
-
-    switch (true) {
-      case multiplier > 1:
-        return TypeEffectiveness.SuperEffective;
-      case multiplier === 1:
-        return TypeEffectiveness.Effective;
-      case multiplier < 1 && multiplier > 0:
-        return TypeEffectiveness.NotVeryEffective;
-      case multiplier === 0:
-        return TypeEffectiveness.NoEffect;
-      default:
-        throw new Error(`unknown effectiveness: ${multiplier}`);
-    }
   }
 }

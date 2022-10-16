@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PokeapiService } from '../matchup/services/matchup.service';
+import { MatchupService } from '../matchup/services/matchup.service';
 
 import { MainComponent } from './main.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
-  let pokeApiServiceStub: Partial<PokeapiService>;
+  let pokeApiServiceStub: Partial<MatchupService>;
 
   beforeEach(async () => {
     pokeApiServiceStub = {};
 
     TestBed.configureTestingModule({
       declarations: [MainComponent],
-      providers: [{ provide: PokeapiService, useValue: pokeApiServiceStub }],
+      providers: [{ provide: MatchupService, useValue: pokeApiServiceStub }],
     });
     fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;

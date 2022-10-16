@@ -1,3 +1,5 @@
+import { typeMatchups } from "./typematrix";
+
 export const POKEMON_COUNT = 898;
 export const MOVE_COUNT = 898;
 
@@ -30,4 +32,25 @@ export enum TypeEffectiveness {
   NotVeryEffective,
   Effective,
   SuperEffective,
+};
+
+export function attack(move: Move, target: Pokemon): TypeEffectiveness {
+  let multiplier = 1;
+
+  target.types.forEach((defendingType: any) => {
+    multiplier *= typeMatchups[move.type.name][defendingType.type.name];
+  });
+
+  switch (true) {
+    case multiplier > 1:
+      return TypeEffectiveness.SuperEffective;
+    case multiplier === 1:
+      return TypeEffectiveness.Effective;
+    case multiplier < 1 && multiplier > 0:
+      return TypeEffectiveness.NotVeryEffective;
+    case multiplier === 0:
+      return TypeEffectiveness.NoEffect;
+    default:
+      throw new Error(`unknown effectiveness: ${multiplier}`);
+  }
 }
