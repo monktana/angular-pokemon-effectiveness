@@ -70,11 +70,15 @@ describe('pokémon matchups', () => {
     });
 
     it('is not effective (0.25x)', () => {
-      expect(attack(sludgebomb, gastly)).toBe(TypeEffectiveness.NotVeryEffective);
+      expect(attack(sludgebomb, gastly)).toBe(
+        TypeEffectiveness.NotVeryEffective
+      );
     });
 
     it('is not effective (0.5x)', () => {
-      expect(attack(watergun, venusaur)).toBe(TypeEffectiveness.NotVeryEffective);
+      expect(attack(watergun, venusaur)).toBe(
+        TypeEffectiveness.NotVeryEffective
+      );
     });
 
     it('is effective', () => {

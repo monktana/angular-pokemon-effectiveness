@@ -1,4 +1,4 @@
-import { typeMatchups } from "./typematrix";
+import { typeMatchups } from './typematrix';
 
 export const POKEMON_COUNT = 898;
 export const MOVE_COUNT = 898;
@@ -32,7 +32,7 @@ export enum TypeEffectiveness {
   NotVeryEffective,
   Effective,
   SuperEffective,
-};
+}
 
 export function attack(move: Move, target: Pokemon): TypeEffectiveness {
   let multiplier = 1;
