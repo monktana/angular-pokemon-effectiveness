@@ -14,16 +14,16 @@ export class PokeApiPokemonRepository implements PokemonRepository {
   getPokemon(id: number | string): Observable<Pokemon> {
     return this.http
       .get<Pokemon>(`${this.API_URL}/pokemon/${id}`)
-      .pipe(catchError(this.handleError('getPokemon'))) as Observable<Pokemon>;
+      .pipe(catchError(this.handleError())) as Observable<Pokemon>;
   }
 
   getMove(id: number | string): Observable<Move> {
     return this.http
       .get<Move>(`${this.API_URL}/move/${id}`)
-      .pipe(catchError(this.handleError('getMove'))) as Observable<Move>;
+      .pipe(catchError(this.handleError())) as Observable<Move>;
   }
 
-  private handleError<T>(operation = 'operation') {
+  private handleError<T>() {
     return (error: HttpErrorResponse): Observable<T> => {
       throw error;
       // TODO: send the error to remote logging infrastructure
