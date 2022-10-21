@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
-import { concatMap, tap, retry } from 'rxjs/operators';
+import { defer, Observable, zip } from 'rxjs';
+import { tap, retry, switchMap, map } from 'rxjs/operators';
 import { PokemonRepository } from 'src/app/pokemon/repository/pokemonRepository';
 import { Pokemon, Move, POKEMON_COUNT } from '../../pokemon/pokemon';
 import { Attacker, Matchup } from '../matchup';
@@ -9,45 +9,41 @@ import { Attacker, Matchup } from '../matchup';
   providedIn: 'root',
 })
 export class MatchupService {
-  readonly API_URL: string = 'https://pokeapi.co/api/v2';
-
   constructor(private repo: PokemonRepository) {}
 
   private getRandomNumber(ceiling: number): number {
     return Math.floor(Math.random() * ceiling + 1);
   }
 
-  private getPokemon(): Promise<Pokemon> {
+  private getPokemon(): Observable<Pokemon> {
     return defer(() =>
       this.repo.getPokemon(this.getRandomNumber(POKEMON_COUNT))
-    )
-      .pipe(tap(this.validatePokemon), retry(10))
-      .toPromise();
+    ).pipe(tap(this.validatePokemon), retry(10));
   }
 
-  private async getAttacker(): Promise<Attacker> {
-    const pokemon = await this.getPokemon();
-
-    const move = await defer(() =>
-      of(pokemon.moves[Math.floor(Math.random() * pokemon.moves.length)])
-    )
-      .pipe(
-        concatMap(move =>
-          this.repo.getMove(move.move.name).pipe(tap(this.validateMove))
-        ),
-        retry(pokemon.moves.length)
-      )
-      .toPromise();
-
-    return { ...pokemon, move };
+  private getRandomMoveOfPokemon(pokemon: Pokemon): string {
+    return pokemon.moves[Math.floor(Math.random() * pokemon.moves.length)].move
+      .name;
   }
 
-  async getMatchup(): Promise<Matchup> {
-    const [attacker, defender] = await Promise.all([
-      this.getAttacker(),
-      this.getPokemon(),
-    ]);
-    return { attacker, defender };
+  private getAttacker(): Observable<Attacker> {
+    return this.getPokemon().pipe(
+      switchMap((pokemon: Pokemon) => {
+        return defer(() =>
+          this.repo.getMove(this.getRandomMoveOfPokemon(pokemon))
+        ).pipe(
+          tap(this.validateMove),
+          retry(10),
+          map((move: Move) => ({ ...pokemon, move }))
+        );
+      })
+    );
+  }
+
+  getMatchup(): Observable<Matchup> {
+    return zip(this.getAttacker(), this.getPokemon()).pipe(
+      map(([attacker, defender]) => ({ attacker, defender }))
+    );
   }
 
   validateMove(move: Move): void {
