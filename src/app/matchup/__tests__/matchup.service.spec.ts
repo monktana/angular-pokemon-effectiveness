@@ -6,10 +6,10 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PokemonRepository } from 'src/app/pokemon/repository/pokemonRepository';
 import { Move, Pokemon } from '../../pokemon/pokemon';
 import { MatchupService } from '../services/matchup.service';
-import POKEMON_FIXTURES from '../../pokemon/__tests__/fixtures/pokemon.json';
-import MOVE_FIXTURES from '../../pokemon/__tests__/fixtures/moves.json';
 import { Matchup } from '../matchup';
-import { defer } from 'rxjs';
+import POKEMON_FIXTURES from '../../../testing/fixtures/pokemon.json';
+import MOVE_FIXTURES from '../../../testing/fixtures/moves.json';
+import { asyncData } from '../../../testing/helpers';
 
 describe('MatchupService', () => {
   let httpTestingController: HttpTestingController;
@@ -87,7 +87,3 @@ describe('MatchupService', () => {
     }));
   });
 });
-
-function asyncData<T>(data: T) {
-  return defer(() => Promise.resolve(data));
-}

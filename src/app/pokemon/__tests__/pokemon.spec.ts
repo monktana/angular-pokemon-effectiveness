@@ -1,25 +1,29 @@
 import { attack, Move, Pokemon, TypeEffectiveness } from '../pokemon';
 import { typeMatchups } from '../typematrix';
-import pokemon from './fixtures/pokemon.json';
-import moves from './fixtures/moves.json';
+import POKEMON_FIXTURES from '../../../testing/fixtures/pokemon.json';
+import MOVE_FIXTURES from '../../../testing/fixtures/moves.json';
 
 describe('pokémon matchups', () => {
   describe('one type per defending pokemon', () => {
-    const squirtle: Pokemon = pokemon.find(
+    const squirtle: Pokemon = POKEMON_FIXTURES.find(
       pokemon => pokemon.name === 'squirtle'
     )!;
 
-    const charmander: Pokemon = pokemon.find(
+    const charmander: Pokemon = POKEMON_FIXTURES.find(
       pokemon => pokemon.name === 'charmander'
     )!;
 
-    const gastly: Pokemon = pokemon.find(pokemon => pokemon.name === 'gastly')!;
+    const gastly: Pokemon = POKEMON_FIXTURES.find(
+      pokemon => pokemon.name === 'gastly'
+    )!;
 
-    const tackle: Move = moves.find(move => move.name === 'tackle')!;
+    const tackle: Move = MOVE_FIXTURES.find(move => move.name === 'tackle')!;
 
-    const watergun: Move = moves.find(move => move.name === 'water-gun')!;
+    const watergun: Move = MOVE_FIXTURES.find(
+      move => move.name === 'water-gun'
+    )!;
 
-    const flamethrower: Move = moves.find(
+    const flamethrower: Move = MOVE_FIXTURES.find(
       move => move.name === 'flamethrower'
     )!;
 
@@ -45,23 +49,29 @@ describe('pokémon matchups', () => {
   });
 
   describe('two types per defending pokemon', () => {
-    const venusaur: Pokemon = pokemon.find(
+    const venusaur: Pokemon = POKEMON_FIXTURES.find(
       pokemon => pokemon.name === 'venusaur'
     )!;
 
-    const charizard: Pokemon = pokemon.find(
+    const charizard: Pokemon = POKEMON_FIXTURES.find(
       pokemon => pokemon.name === 'charizard'
     )!;
 
-    const gastly: Pokemon = pokemon.find(pokemon => pokemon.name === 'gastly')!;
+    const gastly: Pokemon = POKEMON_FIXTURES.find(
+      pokemon => pokemon.name === 'gastly'
+    )!;
 
-    const tackle: Move = moves.find(move => move.name === 'tackle')!;
+    const tackle: Move = MOVE_FIXTURES.find(move => move.name === 'tackle')!;
 
-    const sludgebomb: Move = moves.find(move => move.name === 'sludge-bomb')!;
+    const sludgebomb: Move = MOVE_FIXTURES.find(
+      move => move.name === 'sludge-bomb'
+    )!;
 
-    const watergun: Move = moves.find(move => move.name === 'water-gun')!;
+    const watergun: Move = MOVE_FIXTURES.find(
+      move => move.name === 'water-gun'
+    )!;
 
-    const flamethrower: Move = moves.find(
+    const flamethrower: Move = MOVE_FIXTURES.find(
       move => move.name === 'flamethrower'
     )!;
 
@@ -102,7 +112,7 @@ describe('pokémon matchups', () => {
 // currenly not covering all possible matchups
 describe('type matrix', () => {
   Object.keys(typeMatchups).forEach(type => {
-    pokemon.forEach(pokemon => {
+    POKEMON_FIXTURES.forEach(pokemon => {
       it(`attacks ${pokemon.name} with ${type}`, () => {
         let multiplier = 1;
         pokemon.types.forEach(defendingType => {

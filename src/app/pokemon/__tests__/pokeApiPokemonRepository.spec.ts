@@ -6,8 +6,8 @@ import {
 import { TestBed } from '@angular/core/testing';
 import { Pokemon, Move } from '../../pokemon/pokemon';
 import { PokeApiPokemonRepository } from '../repository/pokeApiPokemonRepository';
-import POKEMON_FIXTURES from './fixtures/pokemon.json';
-import MOVE_FIXTURES from './fixtures/moves.json';
+import POKEMON_FIXTURES from '../../../testing/fixtures/pokemon.json';
+import MOVE_FIXTURES from '../../../testing/fixtures/moves.json';
 
 describe('PokeApiPokemonRepository', () => {
   let httpTestingController: HttpTestingController;
