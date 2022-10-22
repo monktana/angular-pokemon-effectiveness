@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { defer, Observable, zip } from 'rxjs';
+import { defer, forkJoin, Observable } from 'rxjs';
 import { tap, retry, switchMap, map } from 'rxjs/operators';
 import { PokemonRepository } from 'src/app/pokemon/repository/pokemonRepository';
 import { Pokemon, Move, POKEMON_COUNT } from '../../pokemon/pokemon';
@@ -9,6 +9,8 @@ import { Attacker, Matchup } from '../matchup';
   providedIn: 'root',
 })
 export class MatchupService {
+  readonly MAX_RETRIES = 9;
+
   constructor(private repo: PokemonRepository) {}
 
   private getRandomNumber(ceiling: number): number {
@@ -18,7 +20,7 @@ export class MatchupService {
   private getPokemon(): Observable<Pokemon> {
     return defer(() =>
       this.repo.getPokemon(this.getRandomNumber(POKEMON_COUNT))
-    ).pipe(tap(this.validatePokemon), retry(10));
+    ).pipe(tap(this.validatePokemon), retry(this.MAX_RETRIES));
   }
 
   private getRandomMoveOfPokemon(pokemon: Pokemon): string {
@@ -28,31 +30,28 @@ export class MatchupService {
 
   private getAttacker(): Observable<Attacker> {
     return this.getPokemon().pipe(
-      switchMap((pokemon: Pokemon) => {
-        return defer(() =>
+      switchMap((pokemon: Pokemon) =>
+        defer(() =>
           this.repo.getMove(this.getRandomMoveOfPokemon(pokemon))
         ).pipe(
           tap(this.validateMove),
-          retry(10),
-          map((move: Move) => ({ ...pokemon, move }))
-        );
-      })
+          map((move: Move) => ({ ...pokemon, move })),
+          retry(this.MAX_RETRIES)
+        )
+      )
     );
   }
 
   getMatchup(): Observable<Matchup> {
-    return zip(this.getAttacker(), this.getPokemon()).pipe(
-      map(([attacker, defender]) => ({ attacker, defender }))
-    );
+    return forkJoin({
+      attacker: this.getAttacker(),
+      defender: this.getPokemon(),
+    });
   }
 
   validateMove(move: Move): void {
     if (!move.power) {
       throw new Error(`move without power: ${move.name}`);
-    }
-
-    if (move.learned_by_pokemon.length === 0) {
-      throw new Error(`move not learned by any pokémon: ${move.name}`);
     }
   }
 
