@@ -1,13 +1,12 @@
 import {
   HttpClient,
-  HttpRequest,
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Pokemon } from 'src/app/pokemon/pokemon';
 import { API_URL } from 'src/testing/helpers';
 import { CacheService } from '../cache.service';

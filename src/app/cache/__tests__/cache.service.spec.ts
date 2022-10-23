@@ -30,4 +30,10 @@ describe('CacheService', () => {
 
     expect(service.get('test')).toBeDefined();
   });
+
+  it('returns undefined if cache property isnt initialized', () => {
+    // @ts-expect-error
+    service.cache = undefined;
+    expect(service.get('test')).toBeUndefined();
+  });
 });
