@@ -12,8 +12,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  currentMatchup: Observable<Matchup> | undefined;
-  nextMatchup: Observable<Matchup> | undefined;
+  currentMatchup$: Observable<Matchup> | undefined;
+  nextMatchup$: Observable<Matchup> | undefined;
 
   score!: number;
 
@@ -24,39 +24,24 @@ export class MainComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.currentMatchup = this.getMatchup();
-    this.nextMatchup = this.getMatchup();
+    this.currentMatchup$ = this.getMatchup();
+    this.nextMatchup$ = this.getMatchup();
   }
 
   private getMatchup(): Observable<Matchup> {
     return this.matchupService.getMatchup();
   }
 
-  // public fight(guess: TypeEffectiveness): void {
-  //   const effectiveness = attack(
-  //     this.currentMatchup!.attacker.move,
-  //     this.currentMatchup!.defender
-  //   );
+  public finishRound(successful: boolean): void {
+    if (!successful) {
+      console.log('game over');
+      this.temporaryScoreService.reset();
+      return;
+    }
 
-  //   if (guess === effectiveness) {
-  //     this.currentMatchup = this.nextMatchup;
-  //     this.getMatchup()
-  //       .then(matchup => (this.nextMatchup = matchup))
-  //       .catch(reason => console.log({ msg: 'error loading round', reason }));
+    this.currentMatchup$ = this.nextMatchup$;
+    this.nextMatchup$ = this.getMatchup();
 
-  //     this.temporaryScoreService.increase(1);
-  //     return;
-  //   }
-
-  //   this.temporaryScoreService
-  //     .read()
-  //     .subscribe(score => this.localStorageService.save(score))
-  //     .unsubscribe();
-
-  //   this.temporaryScoreService.reset();
-  // }
-
-  public get TypeEffectiveness(): typeof TypeEffectiveness {
-    return TypeEffectiveness;
+    this.temporaryScoreService.increase(1);
   }
 }

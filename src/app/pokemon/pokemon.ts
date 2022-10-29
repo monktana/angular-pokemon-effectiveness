@@ -35,11 +35,10 @@ export enum TypeEffectiveness {
 }
 
 export function attack(move: Move, target: Pokemon): TypeEffectiveness {
-  let multiplier = 1;
-
-  target.types.forEach((defendingType: any) => {
-    multiplier *= typeMatchups[move.type.name][defendingType.type.name];
-  });
+  const multiplier = target.types.reduce((multiplier, defendingType: any) => {
+    return (multiplier *=
+      typeMatchups[move.type.name][defendingType.type.name]);
+  }, 1);
 
   switch (true) {
     case multiplier > 1:

@@ -11,6 +11,7 @@ import { HighscoreComponent } from './score/highscore/highscore.component';
 import { CachingInterceptor } from './cache/Interceptors/caching.interceptor';
 import { PokemonRepository } from './pokemon/repository/pokemonRepository';
 import { PokeApiPokemonRepository } from './pokemon/repository/pokeApiPokemonRepository';
+import { RoundComponent } from './round/round.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PokeApiPokemonRepository } from './pokemon/repository/pokeApiPokemonRep
     MainComponent,
     RoundscoreComponent,
     HighscoreComponent,
+    RoundComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [
