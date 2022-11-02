@@ -5,11 +5,16 @@ import { RoundComponent } from '../round.component';
 
 import POKEMON_FIXTURE from '../../../testing/fixtures/pokemon.json';
 import MOVE_FIXTURE from '../../../testing/fixtures/moves.json';
+import { TypeEffectiveness } from 'src/app/pokemon/pokemon';
+import { first } from 'rxjs/operators';
+
+const attacker = POKEMON_FIXTURE.find(pokemon => pokemon.name === 'bulbasaur')!;
+const move = MOVE_FIXTURE.find(move => move.name === 'tackle')!;
+const defender = POKEMON_FIXTURE.find(pokemon => pokemon.name === 'squirtle')!;
 
 describe('RoundComponent', () => {
   let component: RoundComponent;
   let fixture: ComponentFixture<RoundComponent>;
-  let matchup: Matchup;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,14 +23,6 @@ describe('RoundComponent', () => {
 
     fixture = TestBed.createComponent(RoundComponent);
     component = fixture.componentInstance;
-
-    const attacker = POKEMON_FIXTURE.find(
-      pokemon => pokemon.name === 'bulbasaur'
-    )!;
-    const move = MOVE_FIXTURE.find(move => move.name === 'tackle')!;
-    const defender = POKEMON_FIXTURE.find(
-      pokemon => pokemon.name === 'squirtle'
-    )!;
 
     component.matchup = {
       attacker: { ...attacker, move },
@@ -36,6 +33,67 @@ describe('RoundComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
+  });
+
+  describe('class cests', () => {
+    it('raises the correct event on a correct guess', () => {
+      component.finishRound
+        .pipe(first())
+        .subscribe((result: boolean) => expect(result).toBe(true));
+      component.guess(TypeEffectiveness.Effective);
+    });
+
+    it('raises the correct event on a false guess', () => {
+      component.finishRound
+        .pipe(first())
+        .subscribe((result: boolean) => expect(result).toBe(false));
+      component.guess(TypeEffectiveness.NoEffect);
+    });
+  });
+
+  describe('DOM tests', () => {
+    it('displays the name of the attacking pokemon', () => {
+      const round: HTMLElement = fixture.nativeElement;
+      const attackerName = round.querySelector(
+        '.pokemon-container div.pokemon-name > p'
+      );
+
+      expect(attackerName?.textContent).toEqual(
+        component.matchup.attacker.name
+      );
+    });
+
+    it('displays the name of the attacking move', () => {
+      const round: HTMLElement = fixture.nativeElement;
+      const moveName = round.querySelector(
+        '.pokemonmove-container .pokemonmove-name'
+      );
+
+      expect(moveName?.textContent).toEqual(
+        component.matchup.attacker.move.name
+      );
+    });
+
+    it('displays the name of the defending pokemon', () => {
+      const round: HTMLElement = fixture.nativeElement;
+      const defenderName = round.querySelectorAll(
+        '.pokemon-container div.pokemon-name > p'
+      )[1];
+
+      expect(defenderName?.textContent).toEqual(
+        component.matchup.defender.name
+      );
+    });
+
+    describe('decision buttons', () => {
+      it('displays four decison buttons', () => {
+        const round: HTMLElement = fixture.nativeElement;
+        const defenderName = round.querySelectorAll(
+          '.decisions-container button'
+        );
+        expect(defenderName?.length).toEqual(4);
+      });
+    });
   });
 });
