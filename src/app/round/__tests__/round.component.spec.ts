@@ -1,5 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Matchup } from 'src/app/matchup/matchup';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 
 import { RoundComponent } from '../round.component';
 
@@ -89,11 +93,61 @@ describe('RoundComponent', () => {
     describe('decision buttons', () => {
       it('displays four decison buttons', () => {
         const round: HTMLElement = fixture.nativeElement;
-        const defenderName = round.querySelectorAll(
-          '.decisions-container button'
-        );
-        expect(defenderName?.length).toEqual(4);
+        const buttons = round.querySelectorAll('.decisions-container button');
+        expect(buttons?.length).toEqual(4);
       });
+
+      it('guesses super effective when first button is clicked', fakeAsync(() => {
+        const round: HTMLElement = fixture.nativeElement;
+        const button: HTMLButtonElement = round.querySelector(
+          '.decisions-container button:first-child'
+        ) as HTMLButtonElement;
+
+        const spy = spyOn(component, 'guess');
+        button.click();
+        tick();
+
+        expect(spy).toHaveBeenCalledWith(TypeEffectiveness.SuperEffective);
+      }));
+
+      it('guesses effective when second button is clicked', fakeAsync(() => {
+        const round: HTMLElement = fixture.nativeElement;
+        const button: HTMLButtonElement = round.querySelector(
+          '.decisions-container button:nth-child(2)'
+        ) as HTMLButtonElement;
+
+        const spy = spyOn(component, 'guess');
+        button.click();
+        tick();
+
+        expect(spy).toHaveBeenCalledWith(TypeEffectiveness.Effective);
+      }));
+
+      it('guesses not very effective when third button is clicked', fakeAsync(() => {
+        const round: HTMLElement = fixture.nativeElement;
+        const button: HTMLButtonElement = round.querySelector(
+          '.decisions-container button:nth-child(3)'
+        ) as HTMLButtonElement;
+
+        const spy = spyOn(component, 'guess');
+        button.click();
+        tick();
+
+        expect(spy).toHaveBeenCalledWith(TypeEffectiveness.NotVeryEffective);
+      }));
+
+      it('guesses no effect when last button is clicked', fakeAsync(() => {
+        const round: HTMLElement = fixture.nativeElement;
+        const button: HTMLButtonElement = round.querySelector(
+          '.decisions-container button:nth-child(4)'
+        ) as HTMLButtonElement;
+
+        const spy = spyOn(component, 'guess');
+        button.click();
+        tick();
+
+        expect(spy).toHaveBeenCalledWith(TypeEffectiveness.NoEffect);
+      }));
     });
   });
 });
