@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TypeEffectiveness, attack } from '../pokemon/pokemon';
 import { MatchupService } from '../matchup/services/matchup.service';
-import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
-import { TemporaryScoreService } from '../score/services/temporary-score.service';
 import { Matchup } from '../matchup/matchup';
-import { Observable } from 'rxjs';
+import { Observable, ObservedValueOf } from 'rxjs';
+import { ScoreService } from '../score/services/score.service';
 
 @Component({
   selector: 'app-main',
@@ -14,18 +12,17 @@ import { Observable } from 'rxjs';
 export class MainComponent implements OnInit {
   currentMatchup$: Observable<Matchup> | undefined;
   nextMatchup$: Observable<Matchup> | undefined;
-
-  score!: number;
+  score$: Observable<number> | undefined;
 
   constructor(
     private matchupService: MatchupService,
-    private temporaryScoreService: TemporaryScoreService,
-    private localStorageService: LocalStorageScoreService
+    private scoreService: ScoreService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.currentMatchup$ = this.getMatchup();
     this.nextMatchup$ = this.getMatchup();
+    this.score$ = this.scoreService.get();
   }
 
   private getMatchup(): Observable<Matchup> {
@@ -35,13 +32,12 @@ export class MainComponent implements OnInit {
   public finishRound(successful: boolean): void {
     if (!successful) {
       console.log('game over');
-      this.temporaryScoreService.reset();
+      this.scoreService.reset();
       return;
     }
 
+    this.scoreService.increase();
     this.currentMatchup$ = this.nextMatchup$;
     this.nextMatchup$ = this.getMatchup();
-
-    this.temporaryScoreService.increase(1);
   }
 }

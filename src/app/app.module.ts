@@ -6,21 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 
-import { RoundscoreComponent } from './score/roundscore/roundscore.component';
-import { HighscoreComponent } from './score/highscore/highscore.component';
 import { CachingInterceptor } from './cache/Interceptors/caching.interceptor';
 import { PokemonRepository } from './pokemon/repository/pokemonRepository';
 import { PokeApiPokemonRepository } from './pokemon/repository/pokeApiPokemonRepository';
 import { RoundComponent } from './round/round.component';
+import { ScoreComponent } from './score/score.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainComponent,
-    RoundscoreComponent,
-    HighscoreComponent,
-    RoundComponent,
-  ],
+  declarations: [AppComponent, MainComponent, RoundComponent, ScoreComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },

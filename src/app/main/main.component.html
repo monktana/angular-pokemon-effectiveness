@@ -1,6 +1,5 @@
 <div class="main-container">
-  <app-roundscore></app-roundscore>
-  <app-highscore></app-highscore>
+  <p>Score: {{ score$ | async }}</p>
   <app-round
     *ngIf="currentMatchup$ | async as currentMatchup"
     [matchup]="currentMatchup"
