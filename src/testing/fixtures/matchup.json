@@ -1,0 +1,264 @@
+[
+  {
+    "attacker": {
+      "id": 1,
+      "name": "bulbasaur",
+      "sprites": {
+        "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png",
+        "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png"
+      },
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "grass",
+            "url": "https://pokeapi.co/api/v2/type/12/"
+          }
+        },
+        {
+          "slot": 2,
+          "type": {
+            "name": "poison",
+            "url": "https://pokeapi.co/api/v2/type/4/"
+          }
+        }
+      ],
+      "moves": [],
+      "move": {
+        "id": 33,
+        "name": "tackle",
+        "power": 40,
+        "names": [
+          {
+            "language": {
+              "name": "ja-Hrkt",
+              "url": "https://pokeapi.co/api/v2/language/1/"
+            },
+            "name": "たいあたり"
+          },
+          {
+            "language": {
+              "name": "ko",
+              "url": "https://pokeapi.co/api/v2/language/3/"
+            },
+            "name": "몸통박치기"
+          },
+          {
+            "language": {
+              "name": "zh-Hant",
+              "url": "https://pokeapi.co/api/v2/language/4/"
+            },
+            "name": "撞擊"
+          },
+          {
+            "language": {
+              "name": "fr",
+              "url": "https://pokeapi.co/api/v2/language/5/"
+            },
+            "name": "Charge"
+          },
+          {
+            "language": {
+              "name": "de",
+              "url": "https://pokeapi.co/api/v2/language/6/"
+            },
+            "name": "Tackle"
+          },
+          {
+            "language": {
+              "name": "es",
+              "url": "https://pokeapi.co/api/v2/language/7/"
+            },
+            "name": "Placaje"
+          },
+          {
+            "language": {
+              "name": "it",
+              "url": "https://pokeapi.co/api/v2/language/8/"
+            },
+            "name": "Azione"
+          },
+          {
+            "language": {
+              "name": "en",
+              "url": "https://pokeapi.co/api/v2/language/9/"
+            },
+            "name": "Tackle"
+          },
+          {
+            "language": {
+              "name": "ja",
+              "url": "https://pokeapi.co/api/v2/language/11/"
+            },
+            "name": "たいあたり"
+          },
+          {
+            "language": {
+              "name": "zh-Hans",
+              "url": "https://pokeapi.co/api/v2/language/12/"
+            },
+            "name": "撞击"
+          }
+        ],
+        "type": {
+          "name": "normal",
+          "url": "https://pokeapi.co/api/v2/type/1/"
+        },
+        "learned_by_pokemon": []
+      }
+    },
+    "defender": {
+      "id": 7,
+      "name": "squirtle",
+      "sprites": {
+        "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/7.png",
+        "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/7.png",
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+        "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/7.png"
+      },
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "water",
+            "url": "https://pokeapi.co/api/v2/type/11/"
+          }
+        }
+      ],
+      "moves": []
+    }
+  },
+  {
+    "attacker": {
+      "id": 4,
+      "name": "charmander",
+      "sprites": {
+        "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/4.png",
+        "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/4.png",
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+        "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png"
+      },
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "fire",
+            "url": "https://pokeapi.co/api/v2/type/10/"
+          }
+        }
+      ],
+      "moves": [],
+      "move": {
+        "id": 33,
+        "name": "tackle",
+        "power": 40,
+        "names": [
+          {
+            "language": {
+              "name": "ja-Hrkt",
+              "url": "https://pokeapi.co/api/v2/language/1/"
+            },
+            "name": "たいあたり"
+          },
+          {
+            "language": {
+              "name": "ko",
+              "url": "https://pokeapi.co/api/v2/language/3/"
+            },
+            "name": "몸통박치기"
+          },
+          {
+            "language": {
+              "name": "zh-Hant",
+              "url": "https://pokeapi.co/api/v2/language/4/"
+            },
+            "name": "撞擊"
+          },
+          {
+            "language": {
+              "name": "fr",
+              "url": "https://pokeapi.co/api/v2/language/5/"
+            },
+            "name": "Charge"
+          },
+          {
+            "language": {
+              "name": "de",
+              "url": "https://pokeapi.co/api/v2/language/6/"
+            },
+            "name": "Tackle"
+          },
+          {
+            "language": {
+              "name": "es",
+              "url": "https://pokeapi.co/api/v2/language/7/"
+            },
+            "name": "Placaje"
+          },
+          {
+            "language": {
+              "name": "it",
+              "url": "https://pokeapi.co/api/v2/language/8/"
+            },
+            "name": "Azione"
+          },
+          {
+            "language": {
+              "name": "en",
+              "url": "https://pokeapi.co/api/v2/language/9/"
+            },
+            "name": "Tackle"
+          },
+          {
+            "language": {
+              "name": "ja",
+              "url": "https://pokeapi.co/api/v2/language/11/"
+            },
+            "name": "たいあたり"
+          },
+          {
+            "language": {
+              "name": "zh-Hans",
+              "url": "https://pokeapi.co/api/v2/language/12/"
+            },
+            "name": "撞击"
+          }
+        ],
+        "type": {
+          "name": "normal",
+          "url": "https://pokeapi.co/api/v2/type/1/"
+        },
+        "learned_by_pokemon": []
+      }
+    },
+    "defender": {
+      "id": 1,
+      "name": "bulbasaur",
+      "sprites": {
+        "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png",
+        "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
+        "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png"
+      },
+      "types": [
+        {
+          "slot": 1,
+          "type": {
+            "name": "grass",
+            "url": "https://pokeapi.co/api/v2/type/12/"
+          }
+        },
+        {
+          "slot": 2,
+          "type": {
+            "name": "poison",
+            "url": "https://pokeapi.co/api/v2/type/4/"
+          }
+        }
+      ],
+      "moves": []
+    }
+  }
+]
