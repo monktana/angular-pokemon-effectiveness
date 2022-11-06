@@ -11,8 +11,8 @@ export const environment = {
     storageBucket: 'pokemoneffectiveness.appspot.com',
     messagingSenderId: '689688156790',
     appId: '1:689688156790:web:bb7633a7ca3848e77b1d57',
-    measurementId: 'G-P62YC18WKG'
-  }
+    measurementId: 'G-P62YC18WKG',
+  },
 };
 
 /*

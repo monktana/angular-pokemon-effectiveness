@@ -17,7 +17,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 1,
     steel: 0.5,
-    fairy: 1
+    fairy: 1,
   },
   grass: {
     normal: 1,
@@ -37,7 +37,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 0.5,
     dark: 1,
     steel: 0.5,
-    fairy: 1
+    fairy: 1,
   },
   fire: {
     normal: 1,
@@ -57,7 +57,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 0.5,
     dark: 1,
     steel: 2,
-    fairy: 1
+    fairy: 1,
   },
   water: {
     normal: 1,
@@ -77,7 +77,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 0.5,
     dark: 1,
     steel: 1,
-    fairy: 1
+    fairy: 1,
   },
   electric: {
     normal: 1,
@@ -97,7 +97,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 0.5,
     dark: 1,
     steel: 1,
-    fairy: 1
+    fairy: 1,
   },
   fighting: {
     normal: 2,
@@ -117,7 +117,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 2,
     steel: 2,
-    fairy: 0.5
+    fairy: 0.5,
   },
   flying: {
     normal: 1,
@@ -137,7 +137,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 1,
     steel: 0.5,
-    fairy: 1
+    fairy: 1,
   },
   poison: {
     normal: 1,
@@ -157,7 +157,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 1,
     steel: 0,
-    fairy: 2
+    fairy: 2,
   },
   ground: {
     normal: 1,
@@ -177,7 +177,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 1,
     steel: 2,
-    fairy: 1
+    fairy: 1,
   },
   rock: {
     normal: 1,
@@ -197,7 +197,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 1,
     steel: 0.5,
-    fairy: 1
+    fairy: 1,
   },
   bug: {
     normal: 1,
@@ -217,7 +217,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 2,
     steel: 0.5,
-    fairy: 0.5
+    fairy: 0.5,
   },
   ice: {
     normal: 1,
@@ -237,7 +237,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 2,
     dark: 1,
     steel: 0.5,
-    fairy: 1
+    fairy: 1,
   },
   psychic: {
     normal: 1,
@@ -257,7 +257,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 0,
     steel: 0.5,
-    fairy: 1
+    fairy: 1,
   },
   ghost: {
     normal: 0,
@@ -277,7 +277,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 0.5,
     steel: 1,
-    fairy: 1
+    fairy: 1,
   },
   dragon: {
     normal: 1,
@@ -297,7 +297,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 2,
     dark: 1,
     steel: 0.5,
-    fairy: 0
+    fairy: 0,
   },
   dark: {
     normal: 1,
@@ -317,7 +317,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 0.5,
     steel: 1,
-    fairy: 0.5
+    fairy: 0.5,
   },
   steel: {
     normal: 1,
@@ -337,7 +337,7 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 1,
     dark: 1,
     steel: 0.5,
-    fairy: 2
+    fairy: 2,
   },
   fairy: {
     normal: 1,
@@ -357,6 +357,6 @@ export let typeMatchups: { [id: string]: { [id: string]: number } } = {
     dragon: 2,
     dark: 2,
     steel: 0.5,
-    fairy: 1
-  }
+    fairy: 1,
+  },
 };

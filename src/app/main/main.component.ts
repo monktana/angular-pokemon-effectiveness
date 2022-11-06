@@ -1,59 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { defer } from 'rxjs';
-import { map, retry, tap } from 'rxjs/operators';
-import { TypeEffectiveness, attack, Matchup } from '../pokemon/pokemon';
-import { PokeapiService } from '../pokemon/services/pokeapi.service';
-import { LocalStorageScoreService } from '../score/services/local-storage-score.service';
-import { TemporaryScoreService } from '../score/services/temporary-score.service';
+import { MatchupService } from '../matchup/services/matchup.service';
+import { Matchup } from '../matchup/matchup';
+import { Observable, ObservedValueOf } from 'rxjs';
+import { ScoreService } from '../score/services/score.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  currentMatchup: Matchup | undefined;
-  nextMatchup: Matchup | undefined;
+  currentMatchup$: Observable<Matchup> | undefined;
+  nextMatchup$: Observable<Matchup> | undefined;
+  score$: Observable<number> | undefined;
 
-  score!: number;
-
-  constructor(private pokemonService: PokeapiService,
-              private temporaryScoreService: TemporaryScoreService,
-              private localStorageService: LocalStorageScoreService) { }
+  constructor(
+    private matchupService: MatchupService,
+    private scoreService: ScoreService
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    try {
-      this.currentMatchup = await this.getMatchup();
-    } catch (error) {
-      console.log({msg: 'error loading round', error});
-    }
-    
-    try {
-      this.nextMatchup = await this.getMatchup();
-    } catch (error) {
-      console.log({msg: 'error loading round', error});
-    }
+    this.currentMatchup$ = this.getMatchup();
+    this.nextMatchup$ = this.getMatchup();
+    this.score$ = this.scoreService.get();
   }
 
-  private getMatchup(): Promise<Matchup> {
-    return defer(() => this.pokemonService.getMatchup()).pipe(retry(10)).toPromise()
+  private getMatchup(): Observable<Matchup> {
+    return this.matchupService.getMatchup();
   }
 
-  public fight(guess: TypeEffectiveness): void {
-    const effectiveness = attack(this.currentMatchup!.move.type.name, this.currentMatchup!.defending);
-    if (guess === effectiveness) {
-      this.currentMatchup = this.nextMatchup;
-      this.getMatchup().then((matchup) => this.nextMatchup = matchup).catch((reason) => console.log({msg: 'error loading round', reason}));
-
-      this.temporaryScoreService.increase(1);
+  public finishRound(successful: boolean): void {
+    if (!successful) {
+      console.log('game over');
+      this.scoreService.reset();
       return;
     }
 
-    this.temporaryScoreService
-        .read()
-        .subscribe(score => this.localStorageService.save(score))
-        .unsubscribe();
-
-    this.temporaryScoreService.reset();
+    this.scoreService.increase();
+    this.currentMatchup$ = this.nextMatchup$;
+    this.nextMatchup$ = this.getMatchup();
   }
 }

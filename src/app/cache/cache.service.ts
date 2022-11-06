@@ -2,13 +2,12 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CacheService {
+  private cache: Map<String, HttpResponse<unknown>> = new Map();
 
-  private cache: Map<String, HttpResponse<unknown>> = new Map()
-
-  constructor() { }
+  constructor() {}
 
   get(url: string): HttpResponse<unknown> | undefined {
     if (!this.cache) {

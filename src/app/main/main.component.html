@@ -1,9 +1,8 @@
 <div class="main-container">
-  <app-roundscore></app-roundscore>
-  <app-highscore></app-highscore>
-  <div class="gameboard">
-    <app-pokemon [pokemon]="currentMatchup.defending" *ngIf="currentMatchup"></app-pokemon>
-    <app-pokemon [pokemon]="currentMatchup.attacking" [attacking]="true" *ngIf="currentMatchup"></app-pokemon>
-    <app-pokemonmove [move]="currentMatchup.move" [pokemon]="currentMatchup.attacking" (fight)="fight($event)" *ngIf="currentMatchup"></app-pokemonmove>
-  </div>
+  <p>Score: {{ score$ | async }}</p>
+  <app-round
+    *ngIf="currentMatchup$ | async as currentMatchup"
+    [matchup]="currentMatchup"
+    (finishRound)="finishRound($event)">
+  </app-round>
 </div>

@@ -1,4 +1,4 @@
-$white:    #fff !default;
+$white: #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -8,75 +8,75 @@ $gray-600: #6c757d !default;
 $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
-$black:    #000 !default;
+$black: #000 !default;
 
 $grays: (
-  "100": $gray-100,
-  "200": $gray-200,
-  "300": $gray-300,
-  "400": $gray-400,
-  "500": $gray-500,
-  "600": $gray-600,
-  "700": $gray-700,
-  "800": $gray-800,
-  "900": $gray-900
+  '100': $gray-100,
+  '200': $gray-200,
+  '300': $gray-300,
+  '400': $gray-400,
+  '500': $gray-500,
+  '600': $gray-600,
+  '700': $gray-700,
+  '800': $gray-800,
+  '900': $gray-900,
 ) !default;
 
-$color-contrast-dark:   $black !default;
-$color-contrast-light:  $white !default;
+$color-contrast-dark: $black !default;
+$color-contrast-light: $white !default;
 
-$body-bg:    $white !default;
+$body-bg: $white !default;
 $body-color: $gray-900 !default;
 
-$normal:  #A8A77A !default;
-$fire:    #EE8130 !default;
-$water:   #6390F0 !default;
-$electric:#F7D02C !default;
-$grass:   #7AC74C !default;
-$ice:     #96D9D6 !default;
-$fighting:#C22E28 !default;
-$poison:  #A33EA1 !default;
-$ground:  #E2BF65 !default;
-$flying:  #A98FF3 !default;
-$psychic: #F95587 !default;
-$bug:     #A6B91A !default;
-$rock:    #B6A136 !default;
-$ghost:   #735797 !default;
-$dragon:  #6F35FC !default;
-$dark:    #705746 !default;
-$steel:   #B7B7CE !default;
-$fairy:   #D685AD !default;
+$normal: #a8a77a !default;
+$fire: #ee8130 !default;
+$water: #6390f0 !default;
+$electric: #f7d02c !default;
+$grass: #7ac74c !default;
+$ice: #96d9d6 !default;
+$fighting: #c22e28 !default;
+$poison: #a33ea1 !default;
+$ground: #e2bf65 !default;
+$flying: #a98ff3 !default;
+$psychic: #f95587 !default;
+$bug: #a6b91a !default;
+$rock: #b6a136 !default;
+$ghost: #735797 !default;
+$dragon: #6f35fc !default;
+$dark: #705746 !default;
+$steel: #b7b7ce !default;
+$fairy: #d685ad !default;
 
 $type-colors: (
-  "normal":   $normal,
-  "fire":     $fire,
-  "water":    $water,
-  "electric": $electric,
-  "grass":    $grass,
-  "ice":      $ice,
-  "fighting": $fighting,
-  "poison":   $poison,
-  "ground":   $ground,
-  "flying":   $flying,
-  "psychic":  $psychic,
-  "bug":      $bug,
-  "rock":     $rock,
-  "ghost":    $ghost,
-  "dragon":   $dragon,
-  "dark":     $dark,
-  "steel":    $steel,
-  "fairy":    $fairy
+  'normal': $normal,
+  'fire': $fire,
+  'water': $water,
+  'electric': $electric,
+  'grass': $grass,
+  'ice': $ice,
+  'fighting': $fighting,
+  'poison': $poison,
+  'ground': $ground,
+  'flying': $flying,
+  'psychic': $psychic,
+  'bug': $bug,
+  'rock': $rock,
+  'ghost': $ghost,
+  'dragon': $dragon,
+  'dark': $dark,
+  'steel': $steel,
+  'fairy': $fairy,
 ) !default;
 
-$font-weight-lighter:         lighter !default;
-$font-weight-light:           300 !default;
-$font-weight-normal:          400 !default;
-$font-weight-bold:            700 !default;
-$font-weight-bolder:          bolder !default;
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: bolder !default;
 
-$font-size-root:              null !default;
-$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
-$font-size-sm:                $font-size-base * .875 !default;
-$font-size-lg:                $font-size-base * 1.25 !default;
+$font-size-root: null !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-sm: $font-size-base * 0.875 !default;
+$font-size-lg: $font-size-base * 1.25 !default;
 
-$border-width:                1px !default;
+$border-width: 1px !default;

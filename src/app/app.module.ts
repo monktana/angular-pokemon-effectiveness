@@ -6,30 +6,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 
-import { environment } from '../environments/environment';
-import { PokemonComponent } from './pokemon/pokemon.component';
-import { RoundscoreComponent } from './score/roundscore/roundscore.component';
-import { HighscoreComponent } from './score/highscore/highscore.component';
-import { PokemonmoveComponent } from './pokemon/pokemonmove/pokemonmove.component';
 import { CachingInterceptor } from './cache/Interceptors/caching.interceptor';
+import { PokemonRepository } from './pokemon/repository/pokemonRepository';
+import { PokeApiPokemonRepository } from './pokemon/repository/pokeApiPokemonRepository';
+import { RoundComponent } from './round/round.component';
+import { ScoreComponent } from './score/score.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainComponent,
-    PokemonComponent,
-    RoundscoreComponent,
-    HighscoreComponent,
-    PokemonmoveComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent, MainComponent, RoundComponent, ScoreComponent],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+    {
+      provide: PokemonRepository,
+      useClass: PokeApiPokemonRepository,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
