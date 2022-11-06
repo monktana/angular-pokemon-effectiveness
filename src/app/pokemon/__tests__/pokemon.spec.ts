@@ -4,29 +4,31 @@ import POKEMON_FIXTURES from '../../../testing/fixtures/pokemon.json';
 import MOVE_FIXTURES from '../../../testing/fixtures/moves.json';
 
 describe('pokémon matchups', () => {
-  describe('one type per defending pokemon', () => {
-    const squirtle: Pokemon = POKEMON_FIXTURES.find(
-      pokemon => pokemon.name === 'squirtle'
-    )!;
+  let squirtle: Pokemon;
+  let charmander: Pokemon;
+  let venusaur: Pokemon;
+  let charizard: Pokemon;
+  let gastly: Pokemon;
+  let tackle: Move;
+  let sludgebomb: Move;
+  let watergun: Move;
+  let flamethrower: Move;
 
-    const charmander: Pokemon = POKEMON_FIXTURES.find(
+  beforeAll(() => {
+    squirtle = POKEMON_FIXTURES.find(pokemon => pokemon.name === 'squirtle')!;
+    charmander = POKEMON_FIXTURES.find(
       pokemon => pokemon.name === 'charmander'
     )!;
+    venusaur = POKEMON_FIXTURES.find(pokemon => pokemon.name === 'venusaur')!;
+    charizard = POKEMON_FIXTURES.find(pokemon => pokemon.name === 'charizard')!;
+    gastly = POKEMON_FIXTURES.find(pokemon => pokemon.name === 'gastly')!;
+    tackle = MOVE_FIXTURES.find(move => move.name === 'tackle')!;
+    sludgebomb = MOVE_FIXTURES.find(move => move.name === 'sludge-bomb')!;
+    watergun = MOVE_FIXTURES.find(move => move.name === 'water-gun')!;
+    flamethrower = MOVE_FIXTURES.find(move => move.name === 'flamethrower')!;
+  });
 
-    const gastly: Pokemon = POKEMON_FIXTURES.find(
-      pokemon => pokemon.name === 'gastly'
-    )!;
-
-    const tackle: Move = MOVE_FIXTURES.find(move => move.name === 'tackle')!;
-
-    const watergun: Move = MOVE_FIXTURES.find(
-      move => move.name === 'water-gun'
-    )!;
-
-    const flamethrower: Move = MOVE_FIXTURES.find(
-      move => move.name === 'flamethrower'
-    )!;
-
+  describe('one type per defending pokemon', () => {
     it('has no effect', () => {
       expect(attack(tackle, gastly)).toBe(TypeEffectiveness.NoEffect);
     });
@@ -49,32 +51,6 @@ describe('pokémon matchups', () => {
   });
 
   describe('two types per defending pokemon', () => {
-    const venusaur: Pokemon = POKEMON_FIXTURES.find(
-      pokemon => pokemon.name === 'venusaur'
-    )!;
-
-    const charizard: Pokemon = POKEMON_FIXTURES.find(
-      pokemon => pokemon.name === 'charizard'
-    )!;
-
-    const gastly: Pokemon = POKEMON_FIXTURES.find(
-      pokemon => pokemon.name === 'gastly'
-    )!;
-
-    const tackle: Move = MOVE_FIXTURES.find(move => move.name === 'tackle')!;
-
-    const sludgebomb: Move = MOVE_FIXTURES.find(
-      move => move.name === 'sludge-bomb'
-    )!;
-
-    const watergun: Move = MOVE_FIXTURES.find(
-      move => move.name === 'water-gun'
-    )!;
-
-    const flamethrower: Move = MOVE_FIXTURES.find(
-      move => move.name === 'flamethrower'
-    )!;
-
     it('has no effect', () => {
       expect(attack(tackle, gastly)).toBe(TypeEffectiveness.NoEffect);
     });
